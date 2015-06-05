@@ -24,4 +24,9 @@ public class MainController extends AbstractController {
     public void onClickMunicipioMenu(ActionEvent event) {
         System.out.println("Menu município funcionando!");
     }
+
+    @FXML
+    public void onClickFecharMenu(ActionEvent event) {
+        System.out.println("Menu fechar funcionando!");
+    }
 }

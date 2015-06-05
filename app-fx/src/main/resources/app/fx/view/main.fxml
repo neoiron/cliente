@@ -22,7 +22,8 @@
                 <MenuItem mnemonicParsing="false" text="Município"
                         onAction="#onClickMunicipioMenu" />
                 <SeparatorMenuItem mnemonicParsing="false"/>
-                <MenuItem mnemonicParsing="false" text="Fechar"/>
+                <MenuItem mnemonicParsing="false" text="Fechar"
+                        onAction="#onClickFecharMenu" />
             </Menu>
         </MenuBar>
     </top>
