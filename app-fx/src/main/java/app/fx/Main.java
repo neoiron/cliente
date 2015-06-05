@@ -9,7 +9,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = FXMLHelper.createScene("/app/fx/view/main.fxml", "/app/fx/view/main.css");
+        Scene scene = FXMLHelper.createScene(
+                primaryStage,
+                "/app/fx/view/main.fxml",
+                "/app/fx/view/main.css");
 
         primaryStage.setTitle("Cadastro de Clientes");
         primaryStage.setScene(scene);
