@@ -14,13 +14,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL view, style;
         Parent root;
         Scene scene;
 
-        view = FXMLHelper.class.getResource("/app/fx/view/main.fxml");
-        style = this.getClass().getResource("/app/fx/view/main.css");
-        root = FXMLHelper.createView(view, style);
+        root = FXMLHelper.createView("/app/fx/view/main.fxml", "/app/fx/view/main.css");
         scene = new Scene(root);
 
         primaryStage.setTitle("Cadastro de Clientes");

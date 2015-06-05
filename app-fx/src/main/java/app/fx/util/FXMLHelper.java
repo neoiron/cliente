@@ -13,6 +13,20 @@ final public class FXMLHelper {
         super();
     }
 
+    public static Parent createView(String view, String... styles) throws Exception {
+        URL v;
+        URL[] s;
+
+        v = FXMLHelper.class.getResource(view);
+        s = new URL[styles.length];
+
+        for (int i = 0; i < styles.length; i++) {
+            s[i] = FXMLHelper.class.getResource(styles[i]);
+        }
+
+        return FXMLHelper.createView(v, s);
+    }
+
     public static Parent createView(URL view, URL... styles) throws Exception {
         FXMLLoader fxml;
         Parent root;
