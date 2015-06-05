@@ -11,10 +11,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Scene scene = FXMLHelper.createScene(
                 primaryStage,
+                "Cadastro de Clientes",
                 "/app/fx/view/main.fxml",
                 "/app/fx/view/main.css");
 
-        primaryStage.setTitle("Cadastro de Clientes");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

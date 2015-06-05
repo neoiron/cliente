@@ -14,7 +14,7 @@ final public class FXMLHelper {
         super();
     }
 
-    public static Scene createScene(Stage stage, String view, String... styles) throws Exception {
+    public static Scene createScene(Stage stage, String viewTitle, String view, String... styles) throws Exception {
         URL v;
         URL[] s;
 
@@ -25,16 +25,16 @@ final public class FXMLHelper {
             s[i] = FXMLHelper.class.getResource(styles[i]);
         }
 
-        return createScene(stage, v, s);
+        return createScene(stage, viewTitle, v, s);
     }
 
-    public static Scene createScene(Stage stage, URL view, URL... styles) throws Exception {
-        Parent root = createView(stage, view, styles);
+    public static Scene createScene(Stage stage, String viewTitle, URL view, URL... styles) throws Exception {
+        Parent root = createView(stage, viewTitle, view, styles);
 
         return new Scene(root);
     }
 
-    public static Parent createView(Stage stage, URL view, URL... styles) throws Exception {
+    public static Parent createView(Stage stage, String viewTitle, URL view, URL... styles) throws Exception {
         FXMLLoader fxml;
         Controller controller;
         Parent root;
@@ -46,6 +46,8 @@ final public class FXMLHelper {
         for (URL style : styles) {
             root.getStylesheets().add(style.toExternalForm());
         }
+
+        stage.setTitle(viewTitle);
 
         controller.setStage(stage);
 
