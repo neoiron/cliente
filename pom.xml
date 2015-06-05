@@ -38,6 +38,12 @@
                     <target>${version.jdk}</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
         </plugins>
     </build>
 
