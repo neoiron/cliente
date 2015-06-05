@@ -1,5 +1,19 @@
 package app.fx.controller;
 
-abstract class AbstractController {
+import app.fx.api.Controller;
+import javafx.stage.Stage;
 
+abstract class AbstractController implements Controller {
+
+    private Stage stage;
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
+
+    @Override
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 }
