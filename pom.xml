@@ -141,6 +141,10 @@
         </plugins>
     </build>
 
+    <modules>
+        <module>core</module>
+    </modules>
+
     <dependencies>
         <!-- JUnit 4 -->
         <dependency>
