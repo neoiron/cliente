@@ -17,7 +17,8 @@
                 </Menu>
                 <MenuItem mnemonicParsing="false" text="Logradouro"/>
                 <MenuItem mnemonicParsing="false" text="Bairro"/>
-                <MenuItem mnemonicParsing="false" text="Município"/>
+                <MenuItem mnemonicParsing="false" text="Município"
+                        onAction="#onClickMunicipioMenu" />
                 <SeparatorMenuItem mnemonicParsing="false"/>
                 <MenuItem mnemonicParsing="false" text="Fechar"/>
             </Menu>
