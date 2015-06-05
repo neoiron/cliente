@@ -20,10 +20,8 @@ public class Main extends Application {
 
         view = FXMLHelper.class.getResource("/app/fx/view/main.fxml");
         style = this.getClass().getResource("/app/fx/view/main.css");
-        root = FXMLHelper.createView(view);
+        root = FXMLHelper.createView(view, style);
         scene = new Scene(root);
-
-        scene.getStylesheets().add(style.toExternalForm());
 
         primaryStage.setTitle("Cadastro de Clientes");
         primaryStage.setScene(scene);

@@ -13,12 +13,16 @@ final public class FXMLHelper {
         super();
     }
 
-    public static Parent createView(URL view) throws Exception {
+    public static Parent createView(URL view, URL... styles) throws Exception {
         FXMLLoader fxml;
         Parent root;
 
         fxml = new FXMLLoader(view);
         root = fxml.load();
+
+        for (URL style : styles) {
+            root.getStylesheets().add(style.toExternalForm());
+        }
 
         return root;
     }
