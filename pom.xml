@@ -22,7 +22,7 @@
             <id>neoiron</id>
             <name>Prestes, E. M.</name>
             <email>neoiron@gmail.com</email>
-            <organization />
+            <organization/>
             <timezone>-3</timezone>
         </developer>
     </developers>
@@ -142,17 +142,17 @@
     </build>
 
     <dependencies>
-    <!-- JUnit 4 -->
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${version.junit}</version>
-    </dependency>
-    <dependency>
-        <groupId>junit-addons</groupId>
-        <artifactId>junit-addons</artifactId>
-        <version>${version.junit-addons}</version>
-    </dependency>
+        <!-- JUnit 4 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit-addons</groupId>
+            <artifactId>junit-addons</artifactId>
+            <version>${version.junit-addons}</version>
+        </dependency>
 
         <!-- SLF4J -->
         <dependency>
