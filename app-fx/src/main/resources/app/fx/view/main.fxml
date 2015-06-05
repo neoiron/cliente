@@ -12,7 +12,8 @@
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Cadastros">
                 <Menu mnemonicParsing="false" text="Cliente">
-                    <MenuItem mnemonicParsing="false" text="Listar"/>
+                    <MenuItem mnemonicParsing="false" text="Listar"
+                            onAction="#onClickClienteListarMenu" />
                     <MenuItem mnemonicParsing="false" text="Novo"/>
                 </Menu>
                 <MenuItem mnemonicParsing="false" text="Logradouro"
