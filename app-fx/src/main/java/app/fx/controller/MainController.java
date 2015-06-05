@@ -11,6 +11,11 @@ public class MainController extends AbstractController {
     public static final String VIEW_TITLE = "Cadastro de Clientes";
 
     @FXML
+    public void onClickBairroMenu(ActionEvent event) {
+        System.out.println("Menu bairro funcionando!");
+    }
+
+    @FXML
     public void onClickMunicipioMenu(ActionEvent event) {
         System.out.println("Menu município funcionando!");
     }
