@@ -1,6 +1,8 @@
 package app.fx;
 
+import app.fx.util.FXMLHelper;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,15 +14,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxml;
         URL view, style;
         Parent root;
         Scene scene;
 
-        view = this.getClass().getResource("/app/fx/view/main.fxml");
+        view = FXMLHelper.class.getResource("/app/fx/view/main.fxml");
         style = this.getClass().getResource("/app/fx/view/main.css");
-        fxml = new FXMLLoader(view);
-        root = fxml.load();
+        root = FXMLHelper.createView(view);
         scene = new Scene(root);
 
         scene.getStylesheets().add(style.toExternalForm());
