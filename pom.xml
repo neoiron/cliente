@@ -153,6 +153,23 @@
         <artifactId>junit-addons</artifactId>
         <version>${version.junit-addons}</version>
     </dependency>
+
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${version.slf4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${version.slf4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${version.log4j}</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -161,5 +178,7 @@
         <version.jdk>1.8</version.jdk>
         <version.junit>4.12</version.junit>
         <version.junit-addons>1.4</version.junit-addons>
+        <version.slf4j>1.7.12</version.slf4j>
+        <version.log4j>1.2.17</version.log4j>
     </properties>
 </project>
