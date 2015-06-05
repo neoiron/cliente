@@ -16,6 +16,11 @@ public class MainController extends AbstractController {
     }
 
     @FXML
+    public void onClickClienteNovoMenu(ActionEvent event) {
+        System.out.println("Menu cliente > novo funcionando!");
+    }
+
+    @FXML
     public void onClickLogradouroMenu(ActionEvent event) {
         System.out.println("Menu logradouro funcionando!");
     }

@@ -14,7 +14,8 @@
                 <Menu mnemonicParsing="false" text="Cliente">
                     <MenuItem mnemonicParsing="false" text="Listar"
                             onAction="#onClickClienteListarMenu" />
-                    <MenuItem mnemonicParsing="false" text="Novo"/>
+                    <MenuItem mnemonicParsing="false" text="Novo"
+                            onAction="#onClickClienteNovoMenu" />
                 </Menu>
                 <MenuItem mnemonicParsing="false" text="Logradouro"
                         onAction="#onClickLogradouroMenu" />
