@@ -141,9 +141,19 @@
         </plugins>
     </build>
 
+    <dependencies>
+    <!-- JUnit 4 -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+    </dependency>
+    </dependencies>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <version.jdk>1.8</version.jdk>
+        <version.junit>4.12</version.junit>
     </properties>
 </project>
