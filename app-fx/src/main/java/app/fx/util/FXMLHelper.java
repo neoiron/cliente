@@ -13,7 +13,7 @@ final public class FXMLHelper {
         super();
     }
 
-    public static Parent createView(String view, String... styles) throws Exception {
+    public static Scene createScene(String view, String... styles) throws Exception {
         URL v;
         URL[] s;
 
@@ -24,7 +24,13 @@ final public class FXMLHelper {
             s[i] = FXMLHelper.class.getResource(styles[i]);
         }
 
-        return FXMLHelper.createView(v, s);
+        return createScene(v, s);
+    }
+
+    public static Scene createScene(URL view, URL... styles) throws Exception {
+        Parent root = createView(view, styles);
+
+        return new Scene(root);
     }
 
     public static Parent createView(URL view, URL... styles) throws Exception {
