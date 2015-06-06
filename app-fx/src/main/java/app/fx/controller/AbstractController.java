@@ -1,6 +1,8 @@
 package app.fx.controller;
 
 import app.fx.api.Controller;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 abstract class AbstractController implements Controller {
@@ -15,5 +17,13 @@ abstract class AbstractController implements Controller {
     @Override
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    protected Scene getScene() {
+        return stage.getScene();
+    }
+
+    protected <V extends Parent> V getRoot() {
+        return (V) getScene().getRoot();
     }
 }

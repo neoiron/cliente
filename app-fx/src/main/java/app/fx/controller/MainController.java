@@ -1,7 +1,11 @@
 package app.fx.controller;
 
+import app.fx.util.FXMLHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class MainController extends AbstractController {
 
@@ -32,7 +36,23 @@ public class MainController extends AbstractController {
 
     @FXML
     public void onClickMunicipioMenu(ActionEvent event) {
-        System.out.println("Menu município funcionando!");
+        BorderPane root;
+        Parent view;
+        Stage stage;
+
+        try {
+            stage = getStage();
+            root = getRoot();
+            view = FXMLHelper.createView(
+                    stage,
+                    MunicipioController.VIEW_TITLE,
+                    MunicipioController.VIEW_URL,
+                    MunicipioController.STYLE_URL);
+
+            root.setCenter(view);
+        } catch (Exception cause) {
+            cause.printStackTrace();
+        }
     }
 
     @FXML

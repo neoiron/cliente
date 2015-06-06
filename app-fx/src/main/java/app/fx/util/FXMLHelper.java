@@ -15,15 +15,8 @@ final public class FXMLHelper {
     }
 
     public static Scene createScene(Stage stage, String viewTitle, String view, String... styles) throws Exception {
-        URL v;
-        URL[] s;
-
-        v = FXMLHelper.class.getResource(view);
-        s = new URL[styles.length];
-
-        for (int i = 0; i < styles.length; i++) {
-            s[i] = FXMLHelper.class.getResource(styles[i]);
-        }
+        URL v = getResource(view);
+        URL[] s = getResources(styles);
 
         return createScene(stage, viewTitle, v, s);
     }
@@ -34,10 +27,17 @@ final public class FXMLHelper {
         return new Scene(root);
     }
 
-    public static Parent createView(Stage stage, String viewTitle, URL view, URL... styles) throws Exception {
+    public static <V extends Parent> V createView(Stage stage, String viewTitle, String view, String... styles) throws Exception {
+        URL v = getResource(view);
+        URL[] s = getResources(styles);
+
+        return createView(stage, viewTitle, v, s);
+    }
+
+    public static <V extends Parent> V createView(Stage stage, String viewTitle, URL view, URL... styles) throws Exception {
         FXMLLoader fxml;
         Controller controller;
-        Parent root;
+        V root;
 
         fxml = new FXMLLoader(view);
         root = fxml.load();
@@ -52,5 +52,19 @@ final public class FXMLHelper {
         controller.setStage(stage);
 
         return root;
+    }
+
+    private static URL getResource(String r) {
+        return FXMLHelper.class.getResource(r);
+    }
+
+    private static URL[] getResources(String... r) {
+        URL[] rs = new URL[r.length];
+
+        for (int i = 0; i < r.length; i++) {
+            rs[i] = FXMLHelper.class.getResource(r[i]);
+        }
+
+        return rs;
     }
 }
