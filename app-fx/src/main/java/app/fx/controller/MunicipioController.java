@@ -1,5 +1,5 @@
 package app.fx.controller;
 
-public class MunicipioController {
+public class MunicipioController extends AbstractController {
 
 }
