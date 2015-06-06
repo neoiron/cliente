@@ -44,7 +44,8 @@ final public class FXMLHelper {
         controller = fxml.getController();
 
         for (URL style : styles) {
-            root.getStylesheets().add(style.toExternalForm());
+            if (style != null)
+                root.getStylesheets().add(style.toExternalForm());
         }
 
         stage.setTitle(viewTitle);

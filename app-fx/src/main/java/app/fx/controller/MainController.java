@@ -36,20 +36,8 @@ public class MainController extends AbstractController {
 
     @FXML
     public void onClickMunicipioMenu(ActionEvent event) {
-        BorderPane root;
-        Parent view;
-        Stage stage;
-
         try {
-            stage = getStage();
-            root = getRoot();
-            view = FXMLHelper.createView(
-                    stage,
-                    MunicipioController.VIEW_TITLE,
-                    MunicipioController.VIEW_URL,
-                    MunicipioController.STYLE_URL);
-
-            root.setCenter(view);
+            loadView(MunicipioController.VIEW_TITLE, MunicipioController.VIEW_URL, MunicipioController.STYLE_URL);
         } catch (Exception cause) {
             cause.printStackTrace();
         }
