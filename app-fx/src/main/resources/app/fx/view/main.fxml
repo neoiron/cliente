@@ -31,7 +31,7 @@
     </top>
     <bottom>
         <AnchorPane prefHeight="20.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-            <Label layoutX="9.0" layoutY="3.0" text="Bem-vindo!"/>
+            <Label fx:id="statusLabel" layoutX="9.0" layoutY="3.0" text="Bem-vindo!"/>
         </AnchorPane>
     </bottom>
 </BorderPane>

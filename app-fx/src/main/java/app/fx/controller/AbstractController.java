@@ -2,12 +2,17 @@ package app.fx.controller;
 
 import app.fx.api.Controller;
 import app.fx.util.FXMLHelper;
+import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 abstract class AbstractController implements Controller {
+
+    @FXML
+    private Label statusLabel;
 
     private Stage stage;
 
@@ -29,11 +34,20 @@ abstract class AbstractController implements Controller {
         return (V) getScene().getRoot();
     }
 
+    protected void setStatus(String message) {
+        statusLabel.setText(message);
+    }
+
+    protected void done() {
+        setStatus("Feito!");
+    }
+
     protected void loadView(String viewTitle, String view, String... styles) throws Exception {
         BorderPane root = getRoot();
         Stage stage = getStage();
         Parent v = FXMLHelper.createView(stage, viewTitle, view, styles);
 
         root.setCenter(v);
+        done();
     }
 }
