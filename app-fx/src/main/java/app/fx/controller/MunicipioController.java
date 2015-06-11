@@ -3,6 +3,7 @@ package app.fx.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableView;
 
 public class MunicipioController extends AbstractController {
@@ -41,6 +42,9 @@ public class MunicipioController extends AbstractController {
         cm.getItems().add(0, mi);
         mi = new MenuItem("Apagar");
         cm.getItems().add(1, mi);
+        cm.getItems().add(2, new SeparatorMenuItem());
+        mi = new MenuItem("Selecionar todos");
+        cm.getItems().add(3, mi);
 
         tvMUNICIPIOS.setContextMenu(cm);
     }
