@@ -17,7 +17,7 @@
         </AnchorPane>
     </top>
     <center>
-        <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="tvMUNICIPIOS" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn prefWidth="289.0" text="Município"/>
                 <TableColumn prefWidth="310.0" text="UF"/>
