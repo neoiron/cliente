@@ -1,6 +1,7 @@
 package app.fx.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -19,6 +20,9 @@ public class MunicipioController extends AbstractController {
     private ContextMenu cm;
 
     @FXML
+    private Button bOK;
+
+    @FXML
     public void initialize() {
         initView();
         initActions();
@@ -33,7 +37,7 @@ public class MunicipioController extends AbstractController {
         mi = cm.getItems().get(1);
         mi.setOnAction(e -> System.out.println("Menu 'apagar' municipio funcionando!"));
 
-        mi = cm.getItems().get(3);
+        mi = cm.getItems().get(3);  
         mi.setOnAction(e -> System.out.println("Menu 'selecionar todos' municipio funcionando!"));
     }
 
