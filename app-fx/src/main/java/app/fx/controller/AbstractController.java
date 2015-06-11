@@ -30,6 +30,7 @@ abstract class AbstractController implements Controller {
         return stage.getScene();
     }
 
+    @SuppressWarnings("unchecked")
     protected <V extends Parent> V getRoot() {
         return (V) getScene().getRoot();
     }
