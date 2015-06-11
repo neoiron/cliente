@@ -1,11 +1,7 @@
 package app.fx.controller;
 
-import app.fx.util.FXMLHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 public class MainController extends AbstractController {
 
