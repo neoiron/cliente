@@ -36,6 +36,8 @@ public class MunicipioController extends AbstractController {
         cm = new ContextMenu();
         mi = new MenuItem("Atualizar");
         cm.getItems().add(0, mi);
+        mi = new MenuItem("Apagar");
+        cm.getItems().add(1, mi);
 
         tvMUNICIPIOS.setContextMenu(cm);
     }
