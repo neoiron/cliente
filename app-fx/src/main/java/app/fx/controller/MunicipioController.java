@@ -32,6 +32,9 @@ public class MunicipioController extends AbstractController {
 
         mi = cm.getItems().get(1);
         mi.setOnAction(e -> System.out.println("Menu 'apagar' municipio funcionando!"));
+
+        mi = cm.getItems().get(3);
+        mi.setOnAction(e -> System.out.println("Menu 'selecionar todos' municipio funcionando!"));
     }
 
     private void initView() {
