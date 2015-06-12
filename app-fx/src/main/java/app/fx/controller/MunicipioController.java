@@ -64,4 +64,9 @@ public class MunicipioController extends AbstractController {
     private void onSaveAction(ActionEvent e) {
         System.out.println("Button 'ok' municipio funcionando!");
     }
+
+    @FXML
+    private void onCancelAction(ActionEvent e) {
+        System.out.println("Button 'cancelar' municipio funcionando!");
+    }
 }
