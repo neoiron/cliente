@@ -1,5 +1,6 @@
 package app.fx.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
@@ -57,5 +58,10 @@ public class MunicipioController extends AbstractController {
         cm.getItems().add(3, mi);
 
         tvMUNICIPIOS.setContextMenu(cm);
+    }
+
+    @FXML
+    private void onSaveAction(ActionEvent e) {
+        System.out.println("Button 'ok' municipio funcionando!");
     }
 }
