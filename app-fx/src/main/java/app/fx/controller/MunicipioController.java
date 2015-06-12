@@ -23,6 +23,9 @@ public class MunicipioController extends AbstractController {
     private Button bOK;
 
     @FXML
+    private Button bCANCEL;
+
+    @FXML
     public void initialize() {
         initView();
         initActions();
