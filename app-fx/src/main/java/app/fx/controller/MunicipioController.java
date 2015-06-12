@@ -2,7 +2,6 @@ package app.fx.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -19,12 +18,6 @@ public class MunicipioController extends AbstractController {
     private TableView<?> tvMUNICIPIOS;
 
     private ContextMenu cm;
-
-    @FXML
-    private Button bOK;
-
-    @FXML
-    private Button bCANCEL;
 
     @FXML
     public void initialize() {
