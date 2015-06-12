@@ -61,6 +61,11 @@ public class MunicipioController extends AbstractController {
     }
 
     @FXML
+    private void onChangeUFAction(ActionEvent e) {
+        System.out.println("ComboBox 'uf' municipio funcionando!");
+    }
+
+    @FXML
     private void onSaveAction(ActionEvent e) {
         System.out.println("Button 'ok' municipio funcionando!");
     }
