@@ -21,4 +21,12 @@
    </plugin>
   </plugins>
  </build>
+
+ <dependencies>
+  <dependency>
+   <groupId>br.cliente</groupId>
+   <artifactId>cliente-core</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+ </dependencies>
 </project>
