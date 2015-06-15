@@ -1,5 +1,5 @@
 package domain.exception;
 
-public enum BairroException {
+public class BairroException {
 
 }

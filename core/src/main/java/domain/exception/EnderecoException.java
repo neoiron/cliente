@@ -1,5 +1,5 @@
 package domain.exception;
 
-public enum EnderecoException {
+public class EnderecoException {
 
 }

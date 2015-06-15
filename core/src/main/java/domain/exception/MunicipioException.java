@@ -1,5 +1,5 @@
 package domain.exception;
 
-public enum MunicipioException {
+public class MunicipioException {
 
 }
