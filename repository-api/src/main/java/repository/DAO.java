@@ -1,5 +1,4 @@
 package repository;
 
-interface DAO {
-
+interface DAO<T, E extends Throwable> {
 }
