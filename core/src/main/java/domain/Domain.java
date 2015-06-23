@@ -1,5 +1,6 @@
 package domain;
 
-public interface Domain {
+public interface Domain<E extends Exception> {
 
+    void validar() throws E;
 }
