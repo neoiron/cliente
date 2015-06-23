@@ -48,7 +48,7 @@ public class Municipio implements Comparable<Municipio> {
 
     public void validarNome() throws MunicipioException {
         if (nome == null) {
-            throw new MunicipioException("Nome nulo do município");
+            throw new MunicipioException("Nome nulo do município!");
         }
 
         if (nome.length() == 0) {
@@ -57,6 +57,16 @@ public class Municipio implements Comparable<Municipio> {
 
         if (!String.valueOf(nome).matches("[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ]")) {
             throw new MunicipioException("Nome do município inválido!");
+        }
+    }
+
+    public void validarUf() throws MunicipioException {
+        if (uf == null) {
+            throw new MunicipioException("UF nula do município!");
+        }
+
+        if (uf.isNotSelecionado()) {
+            throw new MunicipioException("Por favor, selecione a UF do município!");
         }
     }
 
