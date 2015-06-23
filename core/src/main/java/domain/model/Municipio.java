@@ -20,4 +20,9 @@ public class Municipio {
     public void setUf(UFVO uf) {
         this.uf = uf;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Municipio [nome=%s, uf=%s, %s]", nome, uf, super.toString());
+    }
 }
