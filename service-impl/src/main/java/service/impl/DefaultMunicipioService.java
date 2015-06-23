@@ -1,5 +1,11 @@
 package service.impl;
 
-public class DefaultMunicipioService {
+import domain.exception.MunicipioException;
+import domain.model.Municipio;
 
+public class DefaultMunicipioService extends AbstractService<Municipio, MunicipioException> {
+
+    protected DefaultMunicipioService() {
+        super(null);
+    }
 }
