@@ -3,7 +3,7 @@ package domain.model;
 public class Municipio {
 
     private CharSequence nome;
-    UFVO uf;
+    private UFVO uf;
 
     public CharSequence getNome() {
         return nome;
@@ -11,5 +11,13 @@ public class Municipio {
 
     public void setNome(CharSequence nome) {
         this.nome = nome;
+    }
+
+    public UFVO getUf() {
+        return uf;
+    }
+
+    public void setUf(UFVO uf) {
+        this.uf = uf;
     }
 }
