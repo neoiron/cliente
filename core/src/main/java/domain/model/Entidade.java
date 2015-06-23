@@ -12,6 +12,14 @@ public class Entidade<PK> {
         this.id = id;
     }
 
+    public boolean isNullId() {
+        return id == null;
+    }
+
+    public boolean isNotNullId() {
+        return !isNullId();
+    }
+
     @Override
     public String toString() {
         return String.format("id=%s", id);
