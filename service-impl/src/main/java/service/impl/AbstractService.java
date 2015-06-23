@@ -8,7 +8,7 @@ abstract class AbstractService<T extends Entidade<?>, E extends Exception> imple
 
     protected final DAO<T, E> dao;
 
-    public AbstractService(DAO<T, E> dao) {
+    protected AbstractService(DAO<T, E> dao) {
         super();
 
         this.dao = dao;
