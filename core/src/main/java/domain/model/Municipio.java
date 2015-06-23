@@ -56,6 +56,16 @@ public class Municipio {
     }
 
     @Override
+    public Object clone() throws CloneNotSupportedException {
+        Municipio m = new Municipio();
+
+        m.setNome(nome);
+        m.setUf(uf);
+
+        return m;
+    }
+
+    @Override
     public String toString() {
         return String.format("Municipio [nome=%s, uf=%s, %s]", nome, uf, super.toString());
     }
