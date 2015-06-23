@@ -8,4 +8,17 @@
  </parent>
  <artifactId>cliente-service-impl</artifactId>
  <name>[JAR][CLIENTE] Módulo service</name>
+
+ <dependencies>
+  <dependency>
+   <groupId>br.cliente</groupId>
+   <artifactId>cliente-core</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+  <dependency>
+   <groupId>br.cliente</groupId>
+   <artifactId>cliente-repository-api</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+ </dependencies>
 </project>
