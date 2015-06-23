@@ -1,6 +1,8 @@
 package service;
 
-interface Service<T, E extends Exception> {
+import domain.model.Entidade;
+
+interface Service<T extends Entidade<?>, E extends Exception> {
 
     void validar(T domain) throws E;
 
