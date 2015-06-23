@@ -8,4 +8,12 @@
  </parent>
  <artifactId>cliente-repository-jdbc</artifactId>
  <name>[JAR][CLIENTE] Módulo reposiroty-jdbc</name>
+
+ <dependencies>
+  <dependency>
+   <groupId>br.cliente</groupId>
+   <artifactId>cliente-core</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+ </dependencies>
 </project>
