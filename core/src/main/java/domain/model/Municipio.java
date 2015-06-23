@@ -14,7 +14,7 @@ public class Municipio implements Comparable<Municipio> {
     }
 
     public Municipio(CharSequence nome, CharSequence uf) {
-        this(nome, UFVO.valueOf(String.valueOf(uf)));
+        this(nome, UFVO.valueOf(uf));
     }
 
     public Municipio(CharSequence nome, UFVO uf) {
@@ -34,6 +34,10 @@ public class Municipio implements Comparable<Municipio> {
 
     public UFVO getUf() {
         return uf;
+    }
+
+    public void setUf(CharSequence uf) {
+        setUf(UFVO.valueOf(uf));
     }
 
     public void setUf(UFVO uf) {
