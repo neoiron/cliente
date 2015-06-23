@@ -15,5 +15,10 @@
    <artifactId>cliente-core</artifactId>
    <version>${project.version}</version>
   </dependency>
+  <dependency>
+   <groupId>br.cliente</groupId>
+   <artifactId>cliente-repository-api</artifactId>
+   <version>${project.version}</version>
+  </dependency>
  </dependencies>
 </project>
