@@ -1,6 +1,8 @@
 package repository;
 
-interface DAO<T, E extends Throwable> {
+import domain.model.Entidade;
+
+interface DAO<T extends Entidade<?>, E extends Throwable> {
 
     void inserir(T domain) throws E;
 
