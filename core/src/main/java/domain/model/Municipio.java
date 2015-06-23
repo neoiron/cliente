@@ -6,7 +6,11 @@ public class Municipio implements Comparable<Municipio> {
     private UFVO uf;
 
     public Municipio() {
-        this("", UFVO.SELECIONE);
+        this("");
+    }
+
+    public Municipio(CharSequence nome) {
+        this(nome, UFVO.SELECIONE);
     }
 
     public Municipio(CharSequence nome, CharSequence uf) {
