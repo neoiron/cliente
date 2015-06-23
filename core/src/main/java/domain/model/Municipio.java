@@ -1,8 +1,9 @@
 package domain.model;
 
+import domain.Domain;
 import domain.exception.MunicipioException;
 
-public class Municipio extends Entidade<Integer> implements Comparable<Municipio> {
+public class Municipio extends Entidade<Integer> implements Comparable<Municipio>, Domain<MunicipioException> {
 
     private CharSequence nome;
     private UFVO uf;
@@ -68,6 +69,12 @@ public class Municipio extends Entidade<Integer> implements Comparable<Municipio
         if (uf.isNotSelecionado()) {
             throw new MunicipioException("Por favor, selecione a UF do município!");
         }
+    }
+
+    @Override
+    public void validar() throws MunicipioException {
+        validarUf();
+        validarNome();
     }
 
     @Override
