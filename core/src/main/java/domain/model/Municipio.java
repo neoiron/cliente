@@ -1,6 +1,6 @@
 package domain.model;
 
-public class Municipio {
+public class Municipio implements Comparable<Municipio> {
 
     private CharSequence nome;
     private UFVO uf;
@@ -19,6 +19,17 @@ public class Municipio {
 
     public void setUf(UFVO uf) {
         this.uf = uf;
+    }
+
+    @Override
+    public int compareTo(Municipio o) {
+        int comp = uf.compareTo(o.uf);
+
+        if (comp == 0) {
+            comp = String.valueOf(nome).compareToIgnoreCase(String.valueOf(o.nome));
+        }
+
+        return comp;
     }
 
     @Override
