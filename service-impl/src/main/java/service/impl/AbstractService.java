@@ -6,7 +6,7 @@ import domain.model.Entidade;
 
 abstract class AbstractService<T extends Entidade<?, E>, E extends Throwable> implements Service<T, E> {
 
-    protected final DAO<T, E> dao;
+    private DAO<T, E> dao;
 
     protected AbstractService(DAO<T, E> dao) {
         super();
