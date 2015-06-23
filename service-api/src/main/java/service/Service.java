@@ -2,7 +2,7 @@ package service;
 
 import domain.model.Entidade;
 
-public interface Service<T extends Entidade<?>, E extends Exception> {
+public interface Service<T extends Entidade<?, ? extends Throwable>, E extends Throwable> {
 
     void validar(T domain) throws E;
 
