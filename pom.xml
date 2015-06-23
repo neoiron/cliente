@@ -141,6 +141,10 @@
         </plugins>
     </build>
 
+    <modules>
+     <module>service-impl</module>
+    </modules>
+
     <dependencies>
         <!-- JUnit 4 -->
         <dependency>
