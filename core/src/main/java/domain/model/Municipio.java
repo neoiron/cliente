@@ -2,7 +2,7 @@ package domain.model;
 
 import domain.exception.MunicipioException;
 
-public class Municipio implements Comparable<Municipio> {
+public class Municipio extends Entidade<Integer> implements Comparable<Municipio> {
 
     private CharSequence nome;
     private UFVO uf;
