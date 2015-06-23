@@ -1,5 +1,7 @@
 package domain.model;
 
+import domain.exception.MunicipioException;
+
 public class Municipio implements Comparable<Municipio> {
 
     private CharSequence nome;
@@ -42,6 +44,20 @@ public class Municipio implements Comparable<Municipio> {
 
     public void setUf(UFVO uf) {
         this.uf = uf;
+    }
+
+    public void validarNome() throws MunicipioException {
+        if (nome == null) {
+            throw new MunicipioException("Nome nulo do município");
+        }
+
+        if (nome.length() == 0) {
+            throw new MunicipioException("Por favor, informe o nome do município!");
+        }
+
+        if (!String.valueOf(nome).matches("[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ]")) {
+            throw new MunicipioException("Nome do município inválido!");
+        }
     }
 
     @Override
