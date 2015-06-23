@@ -7,7 +7,7 @@
   <version>1.0-SNAPSHOT</version>
  </parent>
  <artifactId>cliente-service-impl</artifactId>
- <name>[JAR][CLIENTE] Módulo service</name>
+ <name>[JAR][CLIENTE] Módulo service IMPL</name>
 
  <dependencies>
   <dependency>
