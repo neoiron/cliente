@@ -2,7 +2,7 @@ package domain.model;
 
 import domain.Domain;
 
-public abstract class Entidade<PK, E extends Exception> implements Domain<E> {
+public abstract class Entidade<PK, E extends Throwable> implements Domain<E> {
 
     private PK id;
 
