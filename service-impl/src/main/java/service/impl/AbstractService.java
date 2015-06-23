@@ -1,9 +1,10 @@
 package service.impl;
 
 import repository.DAO;
+import service.Service;
 import domain.model.Entidade;
 
-abstract class AbstractService<T extends Entidade<?>, E extends Exception> {
+abstract class AbstractService<T extends Entidade<?>, E extends Exception> implements Service<T, E> {
 
     protected final DAO<T, E> dao;
 
@@ -11,5 +12,19 @@ abstract class AbstractService<T extends Entidade<?>, E extends Exception> {
         super();
 
         this.dao = dao;
+    }
+
+    @Override
+    public void salvar(T domain) throws E {
+        if (domain.isNullId()) {
+            dao.inserir(domain);
+        } else {
+            dao.atualizar(domain);
+        }
+    }
+
+    @Override
+    public void apagar(T domain) throws E {
+        dao.apagar(domain);
     }
 }
