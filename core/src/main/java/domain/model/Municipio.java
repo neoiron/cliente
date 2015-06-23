@@ -66,6 +66,14 @@ public class Municipio {
     }
 
     @Override
+    protected void finalize() throws Throwable {
+        nome = null;
+        uf = null;
+
+        super.finalize();
+    }
+
+    @Override
     public String toString() {
         return String.format("Municipio [nome=%s, uf=%s, %s]", nome, uf, super.toString());
     }
