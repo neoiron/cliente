@@ -4,7 +4,7 @@ import repository.DAO;
 import service.Service;
 import domain.model.Entidade;
 
-abstract class AbstractService<T extends Entidade<?>, E extends Exception> implements Service<T, E> {
+abstract class AbstractService<T extends Entidade<?, E>, E extends Throwable> implements Service<T, E> {
 
     protected final DAO<T, E> dao;
 
@@ -12,6 +12,11 @@ abstract class AbstractService<T extends Entidade<?>, E extends Exception> imple
         super();
 
         this.dao = dao;
+    }
+
+    @Override
+    public void validar(T domain) throws E {
+        domain.validar();
     }
 
     @Override
