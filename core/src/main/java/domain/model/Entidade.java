@@ -11,4 +11,9 @@ public class Entidade<PK> {
     public void setId(PK id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return String.format("id=%s", id);
+    }
 }
