@@ -1,5 +1,7 @@
 package service.impl;
 
-abstract class AbstractService {
+import domain.model.Entidade;
+
+abstract class AbstractService<T extends Entidade<?>, E extends Exception> {
 
 }
