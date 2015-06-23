@@ -5,6 +5,10 @@ public class Municipio implements Comparable<Municipio> {
     private CharSequence nome;
     private UFVO uf;
 
+    public Municipio() {
+        super();
+    }
+
     public CharSequence getNome() {
         return nome;
     }
