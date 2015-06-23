@@ -9,6 +9,10 @@ public class Municipio implements Comparable<Municipio> {
         this("", UFVO.SELECIONE);
     }
 
+    public Municipio(CharSequence nome, CharSequence uf) {
+        this(nome, UFVO.valueOf(String.valueOf(uf)));
+    }
+
     public Municipio(CharSequence nome, UFVO uf) {
         super();
 
