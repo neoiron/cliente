@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import repository.exception.DatabaseException;
@@ -48,6 +49,10 @@ final class DataSource {
                     "PROBLEMAS AO CARREGAR O DRIVER!", 
                     cause);
         }
+    }
+
+    public static void close(Statement statement) throws DatabaseException {
+        
     }
 
     public static void close(Connection connection) throws DatabaseException {
