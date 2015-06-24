@@ -1,9 +1,8 @@
 package domain.model;
 
-import domain.exception.MunicipioException;
 import domain.exception.MunicipioInvalidoException;
 
-public class Municipio extends Entidade<Integer, MunicipioException> implements Comparable<Municipio> {
+public class Municipio extends Entidade<Integer, MunicipioInvalidoException> implements Comparable<Municipio> {
 
     private CharSequence nome;
     private UFVO uf;
@@ -72,7 +71,7 @@ public class Municipio extends Entidade<Integer, MunicipioException> implements 
     }
 
     @Override
-    public void validar() throws MunicipioException {
+    public void validar() throws MunicipioInvalidoException {
         validarUf();
         validarNome();
     }
