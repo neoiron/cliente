@@ -1,10 +1,14 @@
 package repository.jdbc;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Set;
+import java.util.TreeSet;
 
 import repository.MunicipioDAO;
+import repository.exception.DatabaseException;
 import domain.exception.MunicipioException;
 import domain.model.Municipio;
 import domain.model.UFVO;
@@ -76,6 +80,33 @@ public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException>
 
     @Override
     public Set<Municipio> selecionar(UFVO uf) throws MunicipioException {
-        return null;
+        final String sql = "SELECT id_municipio, nm_municipio FROM municipio WHERE id_uf = ?";
+
+        try (Connection c = DataSource.openConnection(); 
+             PreparedStatement ps = c.prepareStatement(sql);) {
+            final Set<Municipio> municipios = new TreeSet<>();
+            final ResultSet rs;
+            Municipio m;
+
+            ps.setString(1, uf.toString());
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                m = new Municipio();
+
+                m.setId(rs.getInt("id_municipio"));
+                m.setNome(rs.getString("nm_municipio"));
+                m.setUf(uf);
+
+                municipios.add(m);
+            }
+
+            return municipios;
+        } catch (SQLException | DatabaseException cause) {
+            throw new MunicipioException(
+                    "PROBLEMAS AO SELECIONAR MUNICÍPIOS NA BANCO DE DADOS!", 
+                    cause);
+        }
     }
 }
