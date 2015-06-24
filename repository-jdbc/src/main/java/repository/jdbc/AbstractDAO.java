@@ -19,7 +19,7 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
     public void inserir(T domain) throws E {
         Connection c;
         PreparedStatement ps;
-        
+
         try {
             c = DataSource.openConnection();
             ps = c.prepareStatement(getSQLInsert());
@@ -29,7 +29,7 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
 
                 int rows = ps.executeUpdate();
 
-                if (rows == 0) 
+                if (rows == 0)
                     throw getFailInsert();
             } finally {
                 DataSource.close(ps);
@@ -47,26 +47,38 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
 
     @Override
     public void atualizar(T domain) throws E {
-        try (Connection c = DataSource.openConnection();
+        try (Connection c = DataSource.openConnection(); 
              PreparedStatement ps = c.prepareStatement(getSQLUpdate());) {
 
             prepareStatementUpdate(ps);
 
             int rows = ps.executeUpdate();
 
-            if (rows == 0) 
+            if (rows == 0)
                 throw getFailUpdate();
         } catch (SQLException | DatabaseException cause) {
-            throw getExceptionInsert();
+            throw getExceptionUpdate();
         }
     }
 
+    protected abstract E getFailDelete();
     protected abstract E getExceptionDelete();
     protected abstract String getSQLDelete();
-    protected abstract void prepareStatementDelete();
+    protected abstract void prepareStatementDelete(PreparedStatement ps);
 
     @Override
     public void apagar(T domain) throws E {
-        
+        try (Connection c = DataSource.openConnection(); 
+             PreparedStatement ps = c.prepareStatement(getSQLDelete());) {
+
+            prepareStatementDelete(ps);
+
+            int rows = ps.executeUpdate();
+
+            if (rows == 0)
+                throw getFailDelete();
+        } catch (SQLException | DatabaseException cause) {
+            throw getExceptionDelete();
+        }
     }
 }
