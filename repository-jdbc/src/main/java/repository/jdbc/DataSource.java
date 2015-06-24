@@ -51,6 +51,14 @@ final class DataSource {
     }
 
     public static void close(Connection connection) throws DatabaseException {
-        
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException cause) {
+            throw new DatabaseException(
+                    "PROBLEMAS AO FECHAR CONEXÃO COM BANCO DE DADOS!", 
+                    cause);
+        }
     }
 }
