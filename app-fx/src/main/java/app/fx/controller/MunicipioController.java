@@ -2,10 +2,12 @@ package app.fx.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableView;
+import domain.model.UFVO;
 
 public class MunicipioController extends AbstractController {
 
@@ -13,6 +15,9 @@ public class MunicipioController extends AbstractController {
 
     public static final String VIEW_URL = "/app/fx/view/municipio.fxml";
     public static final String VIEW_TITLE = "Cadastro de Municípios";
+
+    @FXML
+    private ComboBox<UFVO> cbUFS;
 
     @FXML
     private TableView<?> tvMUNICIPIOS;
@@ -51,6 +56,8 @@ public class MunicipioController extends AbstractController {
         cm.getItems().add(3, mi);
 
         tvMUNICIPIOS.setContextMenu(cm);
+
+        cbUFS.getItems().addAll(UFVO.values());
     }
 
     @FXML
