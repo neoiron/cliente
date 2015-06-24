@@ -58,6 +58,7 @@ public class MunicipioController extends AbstractController {
         tvMUNICIPIOS.setContextMenu(cm);
 
         cbUFS.getItems().addAll(UFVO.values());
+        cbUFS.setValue(UFVO.SELECIONE);
     }
 
     @FXML
