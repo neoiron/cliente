@@ -13,4 +13,13 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
     public void inserir(T domain) throws E {
         
     }
+
+    protected abstract E getExceptionUpdate();
+    protected abstract String getSQLUpdate();
+    protected abstract void prepareStatementUpdate();
+
+    @Override
+    public void atualizar(T domain) throws E {
+        
+    }
 }
