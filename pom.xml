@@ -141,6 +141,10 @@
         </plugins>
     </build>
 
+    <modules>
+     <module>repository-filesystem</module>
+    </modules>
+
     <dependencies>
         <!-- JUnit 4 -->
         <dependency>
