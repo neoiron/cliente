@@ -1,7 +1,5 @@
 package app.fx.controller;
 
-import service.MunicipioService;
-import service.factory.FactoryService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -9,6 +7,10 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import service.MunicipioService;
+import service.factory.FactoryService;
+import domain.model.Municipio;
 import domain.model.UFVO;
 
 public class MunicipioController extends AbstractController {
@@ -21,10 +23,13 @@ public class MunicipioController extends AbstractController {
     private MunicipioService service;
 
     @FXML
-    private ComboBox<UFVO> cbUFS;
+    private ComboBox<UFVO> cbUF;
 
     @FXML
-    private TableView<?> tvMUNICIPIOS;
+    private TextField tfNOME;
+
+    @FXML
+    private TableView<Municipio> tvMUNICIPIOS;
 
     private ContextMenu cm;
 
@@ -66,18 +71,30 @@ public class MunicipioController extends AbstractController {
 
         tvMUNICIPIOS.setContextMenu(cm);
 
-        cbUFS.getItems().addAll(UFVO.values());
-        cbUFS.setValue(UFVO.SELECIONE);
+        cbUF.getItems().addAll(UFVO.values());
+        cbUF.setValue(UFVO.SELECIONE);
     }
 
     @FXML
     private void onChangeUFAction(ActionEvent e) {
         System.out.println("ComboBox 'uf' municipio funcionando!");
+        clearStatus();
     }
 
     @FXML
     private void onSaveAction(ActionEvent e) {
-        System.out.println("Button 'ok' municipio funcionando!");
+        Municipio domain;
+        try {
+            domain = new Municipio();
+
+            domain.setNome(tfNOME.getText());
+            domain.setUf(cbUF.getValue());
+
+            service.validar(domain);
+            setStatus("Válido!");
+        } catch (Exception cause) {
+            cause.printStackTrace();
+        }
     }
 
     @FXML
