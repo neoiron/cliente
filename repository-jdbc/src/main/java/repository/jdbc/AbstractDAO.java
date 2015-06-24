@@ -43,14 +43,14 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
     protected abstract E getFailUpdate();
     protected abstract E getExceptionUpdate();
     protected abstract String getSQLUpdate();
-    protected abstract void prepareStatementUpdate(PreparedStatement query);
+    protected abstract void prepareStatementUpdate(PreparedStatement query, final T domain) throws SQLException;
 
     @Override
     public void atualizar(T domain) throws E {
         try (Connection c = DataSource.openConnection(); 
              PreparedStatement ps = c.prepareStatement(getSQLUpdate());) {
 
-            prepareStatementUpdate(ps);
+            prepareStatementUpdate(ps, domain);
 
             int rows = ps.executeUpdate();
 

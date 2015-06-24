@@ -34,22 +34,24 @@ public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException>
 
     @Override
     protected MunicipioException getFailUpdate() {
-        return null;
+        return new MunicipioException("Deveria atualizar e não atualizou!");
     }
 
     @Override
     protected MunicipioException getExceptionUpdate() {
-        return null;
+        return new MunicipioException("PROBLEMAS AO ATUALIZAR MUNICÍPIO NO BANCO DE DADOS!");
     }
 
     @Override
     protected String getSQLUpdate() {
-        return null;
+        return "UPDATE municipio SET nm_municipio = ?, id_uf = ? WHERE id_municipio = ?";
     }
 
     @Override
-    protected void prepareStatementUpdate(PreparedStatement query) {
-        
+    protected void prepareStatementUpdate(PreparedStatement query, Municipio domain) throws SQLException {
+        query.setString(1, domain.getNome().toString());
+        query.setString(2, domain.getUf().toString());
+        query.setInt(3, domain.getId());
     }
 
     @Override
