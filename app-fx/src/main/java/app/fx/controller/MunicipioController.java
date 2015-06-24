@@ -1,5 +1,7 @@
 package app.fx.controller;
 
+import org.controlsfx.dialog.Dialogs;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -13,6 +15,7 @@ import service.factory.FactoryService;
 import domain.model.Municipio;
 import domain.model.UFVO;
 
+@SuppressWarnings("deprecation")
 public class MunicipioController extends AbstractController {
 
     public static final String STYLE_URL = "/app/fx/view/municipio.css";
@@ -93,7 +96,12 @@ public class MunicipioController extends AbstractController {
             service.validar(domain);
             setStatus("Válido!");
         } catch (Exception cause) {
-            cause.printStackTrace();
+            Dialogs
+                .create()
+                .title(getStage().getTitle())
+                .masthead(cause.getMessage())
+                .message("OPS...")
+                .showException(cause);
         }
     }
 
