@@ -1,16 +1,25 @@
 package repository.factory;
 
-import repository.DAO;
-import domain.model.Entidade;
+import repository.MunicipioDAO;
+import repository.jdbc.JdbcMunicipioDAO;
 
-abstract class FactoryDAO {
+public final class FactoryDAO {
 
-    protected FactoryDAO() {
+    private FactoryDAO() {
         super();
     }
 
-    protected static <T extends Entidade<?, E>, E extends Throwable> DAO<T, E> newInstance(Class<DAO<T, E>> _class) 
-            throws InstantiationException, IllegalAccessException {
-        return _class.newInstance();
+    public static MunicipioDAO createMunicipioDAO() {
+        return new JdbcMunicipioDAO();
     }
+
+    // TODO Criar método createBairro()
+
+    // TODO Criar método createLogradouro()
+
+    // TODO Criar método createEndereco()
+
+    // TODO Criar método createCliente()
+
+    // TODO Criar método createContato()
 }
