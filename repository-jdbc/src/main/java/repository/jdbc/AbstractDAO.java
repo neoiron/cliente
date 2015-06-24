@@ -64,14 +64,14 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
     protected abstract E getFailDelete();
     protected abstract E getExceptionDelete();
     protected abstract String getSQLDelete();
-    protected abstract void prepareStatementDelete(PreparedStatement ps);
+    protected abstract void prepareStatementDelete(PreparedStatement query, final T domain) throws SQLException;
 
     @Override
     public void apagar(T domain) throws E {
         try (Connection c = DataSource.openConnection(); 
              PreparedStatement ps = c.prepareStatement(getSQLDelete());) {
 
-            prepareStatementDelete(ps);
+            prepareStatementDelete(ps, domain);
 
             int rows = ps.executeUpdate();
 

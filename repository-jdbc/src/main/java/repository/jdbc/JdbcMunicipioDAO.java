@@ -56,22 +56,22 @@ public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException>
 
     @Override
     protected MunicipioException getFailDelete() {
-        return null;
+        return new MunicipioException("Deveria apagar e não apagou!");
     }
 
     @Override
     protected MunicipioException getExceptionDelete() {
-        return null;
+        return new MunicipioException("PROBLEMAS AO APAGAR MUNICÍPIO NO BANCO DE DADOS!");
     }
 
     @Override
     protected String getSQLDelete() {
-        return null;
+        return "DELETE FROM municipio WHERE id_municipio = ?";
     }
 
     @Override
-    protected void prepareStatementDelete(PreparedStatement ps) {
-        
+    protected void prepareStatementDelete(PreparedStatement query, Municipio domain) throws SQLException {
+        query.setInt(1, domain.getId());
     }
 
     @Override
