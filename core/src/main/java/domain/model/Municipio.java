@@ -55,7 +55,7 @@ public class Municipio extends Entidade<Integer, MunicipioInvalidoException> imp
             throw new MunicipioInvalidoException("Por favor, informe o nome do município!");
         }
 
-        if (!String.valueOf(nome).matches("/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/")) {
+        if (!String.valueOf(nome).matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")) {
             throw new MunicipioInvalidoException("Nome do município inválido!");
         }
     }
