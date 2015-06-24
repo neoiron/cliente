@@ -30,5 +30,10 @@
    <artifactId>cliente-core</artifactId>
    <version>${project.version}</version>
   </dependency>
+  <dependency>
+   <groupId>br.cliente</groupId>
+   <artifactId>cliente-service-impl</artifactId>
+   <version>${project.version}</version>
+  </dependency>
  </dependencies>
 </project>
