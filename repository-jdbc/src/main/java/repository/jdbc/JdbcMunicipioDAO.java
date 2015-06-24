@@ -1,6 +1,7 @@
 package repository.jdbc;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Set;
 
 import repository.MunicipioDAO;
@@ -12,22 +13,23 @@ public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException>
 
     @Override
     protected MunicipioException getFailInsert() {
-        return null;
+        return new MunicipioException("Deveria inserir e não inseriu!");
     }
 
     @Override
     protected MunicipioException getExceptionInsert() {
-        return null;
+        return new MunicipioException("PROBLEMAS AO INSERIR MUNICÍPIO NO BANCO DE DADOS!");
     }
 
     @Override
     protected String getSQLInsert() {
-        return null;
+        return "INSERT INTO municipio (nm_municipio, id_uf) VALUES(?, ?)";
     }
 
     @Override
-    protected void prepareStatementInsert(PreparedStatement query) {
-        
+    protected void prepareStatementInsert(PreparedStatement query, Municipio domain) throws SQLException {
+        query.setString(1, domain.getNome().toString());
+        query.setString(2, domain.getUf().toString());
     }
 
     @Override

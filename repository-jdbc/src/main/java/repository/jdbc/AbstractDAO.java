@@ -13,7 +13,7 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
     protected abstract E getFailInsert();
     protected abstract E getExceptionInsert();
     protected abstract String getSQLInsert();
-    protected abstract void prepareStatementInsert(PreparedStatement query);
+    protected abstract void prepareStatementInsert(final PreparedStatement query, final T domain) throws SQLException;
 
     @Override
     public void inserir(T domain) throws E {
@@ -25,7 +25,7 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
             ps = c.prepareStatement(getSQLInsert());
 
             try {
-                prepareStatementInsert(ps);
+                prepareStatementInsert(ps, domain);
 
                 int rows = ps.executeUpdate();
 
