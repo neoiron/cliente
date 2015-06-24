@@ -1,5 +1,7 @@
 package app.fx.controller;
 
+import service.MunicipioService;
+import service.factory.FactoryService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -16,6 +18,8 @@ public class MunicipioController extends AbstractController {
     public static final String VIEW_URL = "/app/fx/view/municipio.fxml";
     public static final String VIEW_TITLE = "Cadastro de Municípios";
 
+    private MunicipioService service;
+
     @FXML
     private ComboBox<UFVO> cbUFS;
 
@@ -28,6 +32,11 @@ public class MunicipioController extends AbstractController {
     public void initialize() {
         initView();
         initActions();
+        initServices();
+    }
+
+    private void initServices() {
+        service = FactoryService.createMunicipioService();
     }
 
     private void initActions() {
