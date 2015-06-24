@@ -42,6 +42,10 @@ abstract class AbstractController implements Controller {
         statusLabel.setText(message);
     }
 
+    protected void clearStatus() {
+        setStatus(null);
+    }
+
     protected void done() {
         setStatus("Feito!");
     }
