@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import service.MunicipioService;
 import service.factory.FactoryService;
+import domain.exception.MunicipioInvalidoException;
 import domain.model.Municipio;
 import domain.model.UFVO;
 
@@ -95,6 +96,13 @@ public class MunicipioController extends AbstractController {
 
             service.validar(domain);
             setStatus("Válido!");
+        } catch (MunicipioInvalidoException cause) {
+            Dialogs
+            .create()
+            .title(getStage().getTitle())
+            .masthead("Falha na validação...")
+            .message(cause.getMessage())
+            .showWarning();
         } catch (Exception cause) {
             Dialogs
                 .create()
