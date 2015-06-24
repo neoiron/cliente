@@ -3,6 +3,7 @@ package service.impl;
 import java.util.Collection;
 
 import repository.MunicipioDAO;
+import repository.factory.FactoryDAO;
 import service.MunicipioService;
 import domain.exception.MunicipioException;
 import domain.model.Municipio;
@@ -13,7 +14,7 @@ public class DefaultMunicipioService extends AbstractService<Municipio, Municipi
     private MunicipioDAO dao;
 
     public DefaultMunicipioService() {
-        this(null); // FIXME new DAO aqui.
+        this(FactoryDAO.createMunicipioDAO());
     }
 
     protected DefaultMunicipioService(MunicipioDAO dao) {

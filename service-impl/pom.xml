@@ -24,6 +24,7 @@
    <groupId>br.cliente</groupId>
    <artifactId>cliente-repository-jdbc</artifactId>
    <version>${project.version}</version>
+   <scope>provided</scope>
   </dependency>
   <dependency>
    <groupId>br.cliente</groupId>
