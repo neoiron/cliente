@@ -22,4 +22,13 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
     public void atualizar(T domain) throws E {
         
     }
+
+    protected abstract E getExceptionDelete();
+    protected abstract String getSQLDelete();
+    protected abstract void prepareStatementDelete();
+
+    @Override
+    public void apagar(T domain) throws E {
+        
+    }
 }
