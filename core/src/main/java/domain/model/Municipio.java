@@ -1,6 +1,7 @@
 package domain.model;
 
 import domain.exception.MunicipioException;
+import domain.exception.MunicipioInvalidoException;
 
 public class Municipio extends Entidade<Integer, MunicipioException> implements Comparable<Municipio> {
 
@@ -46,27 +47,27 @@ public class Municipio extends Entidade<Integer, MunicipioException> implements 
         this.uf = uf;
     }
 
-    public void validarNome() throws MunicipioException {
+    public void validarNome() throws MunicipioInvalidoException {
         if (nome == null) {
-            throw new MunicipioException("Nome nulo do município!");
+            throw new MunicipioInvalidoException("Nome nulo do município!");
         }
 
         if (nome.length() == 0) {
-            throw new MunicipioException("Por favor, informe o nome do município!");
+            throw new MunicipioInvalidoException("Por favor, informe o nome do município!");
         }
 
-        if (!String.valueOf(nome).matches("[^a-zA-ZáéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ]")) {
-            throw new MunicipioException("Nome do município inválido!");
+        if (!String.valueOf(nome).matches("/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/")) {
+            throw new MunicipioInvalidoException("Nome do município inválido!");
         }
     }
 
-    public void validarUf() throws MunicipioException {
+    public void validarUf() throws MunicipioInvalidoException {
         if (uf == null) {
-            throw new MunicipioException("UF nula do município!");
+            throw new MunicipioInvalidoException("UF nula do município!");
         }
 
         if (uf.isNotSelecionado()) {
-            throw new MunicipioException("Por favor, selecione a UF do município!");
+            throw new MunicipioInvalidoException("Por favor, selecione a UF do município!");
         }
     }
 
