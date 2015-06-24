@@ -31,7 +31,7 @@ public class Municipio extends Entidade<Integer, MunicipioInvalidoException> imp
     }
 
     public void setNome(CharSequence nome) {
-        this.nome = nome;
+        this.nome = nome != null && nome.length() > 0 ? nome.toString().trim() : nome;
     }
 
     public UFVO getUf() {
