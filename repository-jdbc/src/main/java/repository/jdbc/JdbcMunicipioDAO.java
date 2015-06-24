@@ -1,11 +1,14 @@
 package repository.jdbc;
 
 import java.sql.PreparedStatement;
+import java.util.Set;
 
+import repository.MunicipioDAO;
 import domain.exception.MunicipioException;
 import domain.model.Municipio;
+import domain.model.UFVO;
 
-public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException> {
+public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException> implements MunicipioDAO {
 
     @Override
     protected MunicipioException getFailInsert() {
@@ -65,5 +68,10 @@ public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException>
     @Override
     protected void prepareStatementDelete(PreparedStatement ps) {
         
+    }
+
+    @Override
+    public Set<Municipio> selecionar(UFVO uf) throws MunicipioException {
+        return null;
     }
 }
