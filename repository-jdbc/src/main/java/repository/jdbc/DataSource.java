@@ -52,7 +52,15 @@ final class DataSource {
     }
 
     public static void close(Statement statement) throws DatabaseException {
-        
+        try {
+            if (statement != null) {
+                statement.close();
+            }
+        } catch (SQLException cause) {
+            throw new DatabaseException(
+                    "PROBLEMAS AO FECHAR CONSULTA!", 
+                    cause);
+        }
     }
 
     public static void close(Connection connection) throws DatabaseException {
