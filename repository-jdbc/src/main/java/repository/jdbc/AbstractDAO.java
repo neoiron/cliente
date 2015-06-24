@@ -19,7 +19,7 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
     public void inserir(T domain) throws E {
         Connection c;
         PreparedStatement ps;
-
+        
         try {
             c = DataSource.openConnection();
             ps = c.prepareStatement(getSQLInsert());
@@ -40,13 +40,25 @@ abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implem
         }
     }
 
+    protected abstract E getFailUpdate();
     protected abstract E getExceptionUpdate();
     protected abstract String getSQLUpdate();
-    protected abstract void prepareStatementUpdate();
+    protected abstract void prepareStatementUpdate(PreparedStatement query);
 
     @Override
     public void atualizar(T domain) throws E {
-        
+        try (Connection c = DataSource.openConnection();
+             PreparedStatement ps = c.prepareStatement(getSQLUpdate());) {
+
+            prepareStatementUpdate(ps);
+
+            int rows = ps.executeUpdate();
+
+            if (rows == 0) 
+                throw getFailUpdate();
+        } catch (SQLException | DatabaseException cause) {
+            throw getExceptionInsert();
+        }
     }
 
     protected abstract E getExceptionDelete();
