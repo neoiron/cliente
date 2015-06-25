@@ -8,11 +8,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
 import service.MunicipioService;
@@ -66,7 +70,7 @@ public class MunicipioController extends AbstractController {
         mi.setOnAction(e -> System.out.println("Menu 'atualizar' municipio funcionando!"));
 
         mi = cm.getItems().get(1);
-        mi.setOnAction(e -> System.out.println("Menu 'apagar' municipio funcionando!"));
+        mi.setOnAction(this::onDeleteAction);
 
         mi = cm.getItems().get(3);  
         mi.setOnAction(e -> System.out.println("Menu 'selecionar todos' municipio funcionando!"));
@@ -85,6 +89,7 @@ public class MunicipioController extends AbstractController {
         cm.getItems().add(3, mi);
 
         tvMUNICIPIOS.setContextMenu(cm);
+        tvMUNICIPIOS.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         cbUF.getItems().addAll(UFVO.values());
         cbUF.setValue(UFVO.SELECIONE);
@@ -148,7 +153,67 @@ public class MunicipioController extends AbstractController {
 
     @FXML
     private void onDeleteAction(ActionEvent e) {
-        
+        TableViewSelectionModel<app.fx.model.Municipio> model;
+        ObservableList<Integer> indices;
+        String message = "";
+        int size;
+
+        try {
+            model = tvMUNICIPIOS.getSelectionModel();
+            indices = model.getSelectedIndices();
+            size = indices.size();
+
+            switch (size) {
+            case 0:
+                message = "Favor, selecione pelo menos 1 município para apagar!";
+                break;
+            default:
+                app.fx.model.Municipio m;
+
+                if (size == 1) {
+                    m = model.getSelectedItem();
+                    message = String.format("%s / %s", m.getNome().get(), m.getUf().get());
+                } else {
+                    message = String.format("%s municípios", size);
+                }
+
+                Action a = Dialogs.create()
+                    .title(getStage().getTitle())
+                    .masthead(message)
+                    .message("Confirma apagar?")
+                    .showConfirm();
+
+                if (Dialog.ACTION_YES.equals(a)) {
+                    for (app.fx.model.Municipio i : model.getSelectedItems()) {
+                        service.apagar(i.getDomain().get());
+                    }
+
+                    loadTable();
+                    done();
+                } else {
+                    model.clearSelection();
+                }
+
+                message = "";
+                break;
+            }
+
+            if (!message.isEmpty()) {
+                Dialogs
+                    .create()
+                    .title(getStage().getTitle())
+                    .masthead("Apagando...")
+                    .message(message)
+                    .showWarning();
+            }
+        } catch (Exception cause) {
+            Dialogs
+                .create()
+                .title(getStage().getTitle())
+                .masthead(cause.getMessage())
+                .message("OPS...")
+                .showException(cause);
+        }
     }
 
     @FXML
