@@ -89,7 +89,37 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
     @Override
     public void apagar(Municipio domain) throws MunicipioException {
+        try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
+            long size = source.length();
 
+            if (size > 0) {
+                StringBuilder content = new StringBuilder();
+                String[] fields;
+                String line;
+                Integer id;
+                long pos;
+
+                source.seek(FILE_BEGIN);
+
+                do {
+                    line = source.readLine();
+                    fields = line.split(CSV_SPLIT_REGEX);
+                    id = Integer.valueOf(fields[0]);
+
+                    if (!id.equals(domain.getId())) {
+                        content.append(line).append(NEW_LINE);
+                    }
+
+                    pos = source.getFilePointer();
+                } while (pos < size);
+
+                source.seek(FILE_BEGIN);
+                source.setLength(FILE_EMPTY);
+                source.writeBytes(content.toString());
+            }
+        } catch (IOException cause) {
+            throw new MunicipioException("PROBLEMAS AO APAGAR MUNICÍPIO!", cause);
+        }
     }
 
     @Override
