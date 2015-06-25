@@ -81,7 +81,7 @@ public class MunicipioController extends AbstractController {
 
     @FXML
     private void onChangeUFAction(ActionEvent e) {
-        System.out.println("ComboBox 'uf' municipio funcionando!");
+        clearForm();
         clearStatus();
     }
 
@@ -96,6 +96,7 @@ public class MunicipioController extends AbstractController {
 
             service.validar(domain);
             service.salvar(domain);
+            clearForm();
             setStatus("Salvo!");
         } catch (MunicipioInvalidoException cause) {
             Dialogs
@@ -116,6 +117,10 @@ public class MunicipioController extends AbstractController {
 
     @FXML
     private void onCancelAction(ActionEvent e) {
-        System.out.println("Button 'cancelar' municipio funcionando!");
+        clearForm();
+    }
+
+    private void clearForm() {
+        tfNOME.setText(null);
     }
 }
