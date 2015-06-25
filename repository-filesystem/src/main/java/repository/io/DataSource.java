@@ -2,7 +2,8 @@ package repository.io;
 
 import repository.exception.FileSystemException;
 
-import java.io.RandomAccessFile;
+import java.io.*;
+import java.util.Properties;
 
 final class DataSource {
 
@@ -20,6 +21,25 @@ final class DataSource {
     }
 
     public static RandomAccessFile openFile() throws FileSystemException {
-        return null;
+        Properties p;
+        Reader r;
+        try {
+            p = new Properties();
+            r = new FileReader(Property.FILE_NAME);
+
+            p.load(r);
+
+            return new RandomAccessFile(
+                    p.getProperty(Property.SOURCE),
+                    p.getProperty(Property.Permission.RW));
+        } catch (FileNotFoundException cause) {
+            throw new FileSystemException(
+                    "ARQUIVO NÃO ENCONTRADO!",
+                    cause);
+        } catch (IOException cause) {
+            throw new FileSystemException(
+                    "PROBLEMAS AO LER ARQUIVO",
+                    cause);
+        }
     }
 }
