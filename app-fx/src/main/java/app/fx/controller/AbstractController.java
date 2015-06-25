@@ -35,6 +35,10 @@ abstract class AbstractController implements Controller {
         return (V) getScene().getRoot();
     }
 
+    protected void setStatus(String format, Object... values) {
+        setStatus(String.format(format, values));
+    }
+
     protected void setStatus(String message) {
         if (statusLabel == null)
             statusLabel = (Label) stage.getScene().lookup("#statusLabel");

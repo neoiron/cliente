@@ -102,14 +102,13 @@ public class MunicipioController extends AbstractController {
     private void onChangeUFAction(ActionEvent e) {
         try {
             loadTable();
-            clearStatus();
         } catch (Exception cause) {
             Dialogs
-            .create()
-            .title(getStage().getTitle())
-            .masthead(cause.getMessage())
-            .message("OPS...")
-            .showException(cause);
+                .create()
+                .title(getStage().getTitle())
+                .masthead(cause.getMessage())
+                .message("OPS...")
+                .showException(cause);
         }
     }
 
@@ -126,14 +125,15 @@ public class MunicipioController extends AbstractController {
             service.salvar(domain);
             clearForm();
             loadTable();
-            setStatus("Salvo!");
         } catch (MunicipioInvalidoException cause) {
+            tfNOME.requestFocus();
+            tfNOME.selectAll();
             Dialogs
-            .create()
-            .title(getStage().getTitle())
-            .masthead("Falha na validação...")
-            .message(cause.getMessage())
-            .showWarning();
+                .create()
+                .title(getStage().getTitle())
+                .masthead("Falha na validação...")
+                .message(cause.getMessage())
+                .showWarning();
         } catch (Exception cause) {
             Dialogs
                 .create()
@@ -155,7 +155,6 @@ public class MunicipioController extends AbstractController {
     private void onDeleteAction(ActionEvent e) {
         TableViewSelectionModel<app.fx.model.Municipio> model;
         ObservableList<Integer> indices;
-        String message = "";
         int size;
 
         try {
@@ -165,9 +164,15 @@ public class MunicipioController extends AbstractController {
 
             switch (size) {
             case 0:
-                message = "Favor, selecione pelo menos 1 município para apagar!";
+                Dialogs
+                    .create()
+                    .title(getStage().getTitle())
+                    .masthead("Apagando...")
+                    .message("Favor, selecione pelo menos 1 município para apagar!")
+                    .showWarning();
                 break;
             default:
+                String message;
                 app.fx.model.Municipio m;
 
                 if (size == 1) {
@@ -177,11 +182,12 @@ public class MunicipioController extends AbstractController {
                     message = String.format("%s municípios", size);
                 }
 
-                Action a = Dialogs.create()
-                    .title(getStage().getTitle())
-                    .masthead(message)
-                    .message("Confirma apagar?")
-                    .showConfirm();
+                Action a = Dialogs
+                                .create()
+                                .title(getStage().getTitle())
+                                .masthead(message)
+                                .message("Confirma apagar?")
+                                .showConfirm();
 
                 if (Dialog.ACTION_YES.equals(a)) {
                     for (app.fx.model.Municipio i : model.getSelectedItems()) {
@@ -189,22 +195,10 @@ public class MunicipioController extends AbstractController {
                     }
 
                     loadTable();
-                    done();
                 } else {
                     model.clearSelection();
                 }
-
-                message = "";
                 break;
-            }
-
-            if (!message.isEmpty()) {
-                Dialogs
-                    .create()
-                    .title(getStage().getTitle())
-                    .masthead("Apagando...")
-                    .message(message)
-                    .showWarning();
             }
         } catch (Exception cause) {
             Dialogs
@@ -232,6 +226,7 @@ public class MunicipioController extends AbstractController {
 
         items.clear();
         municipios.forEach(m -> items.add(new app.fx.model.Municipio(m)));
+        setStatus("%s município(s)", municipios.size());
     }
 
     private void clearForm() {
