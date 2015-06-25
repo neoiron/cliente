@@ -95,7 +95,8 @@ public class MunicipioController extends AbstractController {
             domain.setUf(cbUF.getValue());
 
             service.validar(domain);
-            setStatus("Válido!");
+            service.salvar(domain);
+            setStatus("Salvo!");
         } catch (MunicipioInvalidoException cause) {
             Dialogs
             .create()
