@@ -13,7 +13,7 @@ import domain.exception.MunicipioException;
 import domain.model.Municipio;
 import domain.model.UFVO;
 
-public class JdbcMunicipioDAO extends AbstractDAO<Municipio, MunicipioException> implements MunicipioDAO {
+public class JdbcMunicipioDAO extends JdbcDAO<Municipio, MunicipioException> implements MunicipioDAO {
 
     @Override
     protected MunicipioException getFailInsert() {

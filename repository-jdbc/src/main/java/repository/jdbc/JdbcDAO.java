@@ -8,7 +8,7 @@ import domain.model.Entidade;
 import repository.DAO;
 import repository.exception.DatabaseException;
 
-abstract class AbstractDAO<T extends Entidade<?, E>, E extends Throwable> implements DAO<T, E> {
+abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements DAO<T, E> {
 
     protected abstract E getFailInsert();
     protected abstract E getExceptionInsert();
