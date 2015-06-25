@@ -3,6 +3,7 @@ package repository.io;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Set;
+import java.util.TreeSet;
 
 import repository.MunicipioDAO;
 import domain.exception.MunicipioException;
@@ -126,6 +127,38 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
     @Override
     public Set<Municipio> selecionar(UFVO uf) throws MunicipioException {
-        return null;
+        try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
+            Set<Municipio> municipios = new TreeSet<>();
+            long size = source.length();
+
+            if (size > 0) {
+                Municipio municipio;
+                String[] fields;
+                String line, field;
+                long pos;
+
+                source.seek(FILE_BEGIN);
+
+                do {
+                    line = source.readLine();
+                    fields = line.split(CSV_SPLIT_REGEX);
+                    field = fields[Fields.Municipio.UF.ordinal()];
+
+                    if (UFVO.valueOf(field).equals(uf)) {
+                        municipio = new Municipio(fields[Fields.Municipio.NOME.ordinal()], uf);
+    
+                        municipio.setId(Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]));
+    
+                        municipios.add(municipio);
+                    }
+
+                    pos = source.getFilePointer();
+                } while (pos < size);
+            }
+
+            return municipios;
+        } catch (IOException cause) {
+            throw new MunicipioException("PROBLEMAS AO APAGAR MUNICÍPIO!", cause);
+        }
     }
 }
