@@ -32,7 +32,7 @@
   </dependency>
   <dependency>
    <groupId>br.cliente</groupId>
-   <artifactId>cliente-repository-jdbc</artifactId>
+   <artifactId>cliente-repository-filesystem</artifactId>
    <version>${project.version}</version>
   </dependency>
   <dependency>
