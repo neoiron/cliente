@@ -1,5 +1,8 @@
 package repository.io;
 
-public class DataSource {
+public final class DataSource {
 
+    private DataSource() {
+        super();
+    }
 }
