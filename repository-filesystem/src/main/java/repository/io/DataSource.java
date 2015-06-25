@@ -44,6 +44,13 @@ final class DataSource {
     }
 
     public static void close(RandomAccessFile file) throws FileSystemException {
-
+        try {
+            if (file != null)
+                file.close();
+        } catch (IOException cause) {
+            throw new FileSystemException(
+                    "PROBLEMAS AO FECHAR ARQUIVO",
+                    cause);
+        }
     }
 }
