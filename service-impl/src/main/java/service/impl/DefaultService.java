@@ -2,9 +2,9 @@ package service.impl;
 
 import repository.DAO;
 import service.Service;
-import domain.model.Entidade;
+import domain.Domain;
 
-abstract class DefaultService<T extends Entidade<?, E>, E extends Throwable> implements Service<T, E> {
+abstract class DefaultService<T extends Domain<?, E>, E extends Throwable> implements Service<T, E> {
 
     private DAO<T, E> dao;
 
