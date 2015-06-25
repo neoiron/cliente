@@ -1,15 +1,20 @@
 package app.fx.controller;
 
-import org.controlsfx.dialog.Dialogs;
+import java.util.Collection;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+
+import org.controlsfx.dialog.Dialogs;
+
 import service.MunicipioService;
 import service.factory.FactoryService;
 import domain.exception.MunicipioInvalidoException;
@@ -33,9 +38,15 @@ public class MunicipioController extends AbstractController {
     private TextField tfNOME;
 
     @FXML
-    private TableView<Municipio> tvMUNICIPIOS;
+    private TableView<app.fx.model.Municipio> tvMUNICIPIOS;
 
     private ContextMenu cm;
+
+    @FXML
+    private TableColumn<app.fx.model.Municipio, String> tcNOME;
+
+    @FXML
+    private TableColumn<app.fx.model.Municipio, UFVO> tcUF;
 
     @FXML
     public void initialize() {
@@ -77,12 +88,24 @@ public class MunicipioController extends AbstractController {
 
         cbUF.getItems().addAll(UFVO.values());
         cbUF.setValue(UFVO.SELECIONE);
+
+        tcNOME.setCellValueFactory(data -> data.getValue().getNome());
+        tcUF.setCellValueFactory(data -> data.getValue().getUf());
     }
 
     @FXML
     private void onChangeUFAction(ActionEvent e) {
-        clearForm();
-        clearStatus();
+        try {
+            loadTable();
+            clearStatus();
+        } catch (Exception cause) {
+            Dialogs
+            .create()
+            .title(getStage().getTitle())
+            .masthead(cause.getMessage())
+            .message("OPS...")
+            .showException(cause);
+        }
     }
 
     @FXML
@@ -97,6 +120,7 @@ public class MunicipioController extends AbstractController {
             service.validar(domain);
             service.salvar(domain);
             clearForm();
+            loadTable();
             setStatus("Salvo!");
         } catch (MunicipioInvalidoException cause) {
             Dialogs
@@ -118,6 +142,19 @@ public class MunicipioController extends AbstractController {
     @FXML
     private void onCancelAction(ActionEvent e) {
         clearForm();
+    }
+
+    private void loadTable() throws Exception {
+        ObservableList<app.fx.model.Municipio> items;
+        Collection<Municipio> municipios;
+        UFVO uf;
+
+        items = tvMUNICIPIOS.getItems();
+        uf = cbUF.getValue();
+        municipios = service.listar(uf);
+
+        items.clear();
+        municipios.forEach(m -> items.add(new app.fx.model.Municipio(m)));
     }
 
     private void clearForm() {
