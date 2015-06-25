@@ -18,7 +18,7 @@ final class DataSource {
         String SOURCE = "io.source";
 
         interface Permission {
-            String RW = "io.permission";
+            String RW = "rw";
         }
     }
 
@@ -29,13 +29,16 @@ final class DataSource {
     public static RandomAccessFile openWriteableFile(String fileName) throws IOException {
         Properties p = new Properties();
         Reader r = new FileReader(Property.FILE_NAME);
-        URI uri = URI.create(String.format("file://%s/%s", fileName));
-        Path path = Paths.get(uri);
+        URI uri;
+        Path path;
 
         p.load(r);
+
+        uri = URI.create(String.format("file://%s/%s", p.getProperty(Property.SOURCE), fileName));
+        path = Paths.get(uri);
         path = path.toAbsolutePath();
 
-        return new RandomAccessFile(path.toFile(), p.getProperty(Property.Permission.RW));
+        return new RandomAccessFile(path.toFile(), Property.Permission.RW);
     }
 
     public static void close(RandomAccessFile file) throws FileSystemException {
