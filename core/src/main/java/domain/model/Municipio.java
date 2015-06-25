@@ -141,6 +141,11 @@ public class Municipio extends Entidade<Integer, MunicipioException> implements 
     }
 
     @Override
+    public String toCSV(char separator) {
+        return String.format("%s%s%s%s%s\n", getId(), separator, nome, separator, uf);
+    }
+
+    @Override
     public String toString() {
         return String.format("Municipio [nome=%s, uf=%s, %s]", nome, uf, super.toString());
     }
