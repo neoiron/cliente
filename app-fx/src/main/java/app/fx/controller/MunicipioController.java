@@ -141,6 +141,12 @@ public class MunicipioController extends AbstractController {
 
 
     @FXML
+    private void onUpdateAction(ActionEvent e) {
+        
+    }
+
+
+    @FXML
     private void onDeleteAction(ActionEvent e) {
         
     }
