@@ -139,6 +139,12 @@ public class MunicipioController extends AbstractController {
         }
     }
 
+
+    @FXML
+    private void onDeleteAction(ActionEvent e) {
+        
+    }
+
     @FXML
     private void onCancelAction(ActionEvent e) {
         clearForm();
@@ -159,5 +165,6 @@ public class MunicipioController extends AbstractController {
 
     private void clearForm() {
         tfNOME.setText(null);
+        tfNOME.requestFocus();
     }
 }
