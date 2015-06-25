@@ -1,9 +1,15 @@
 package repository.io;
 
-import repository.exception.FileSystemException;
-
-import java.io.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.io.Reader;
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
+
+import repository.exception.FileSystemException;
 
 final class DataSource {
 
@@ -20,27 +26,16 @@ final class DataSource {
         super();
     }
 
-    public static RandomAccessFile openFile() throws FileSystemException {
-        Properties p;
-        Reader r;
-        try {
-            p = new Properties();
-            r = new FileReader(Property.FILE_NAME);
+    public static RandomAccessFile openWriteableFile(String fileName) throws IOException {
+        Properties p = new Properties();
+        Reader r = new FileReader(Property.FILE_NAME);
+        URI uri = URI.create(String.format("file://%s/%s", fileName));
+        Path path = Paths.get(uri);
 
-            p.load(r);
+        p.load(r);
+        path = path.toAbsolutePath();
 
-            return new RandomAccessFile(
-                    p.getProperty(Property.SOURCE),
-                    p.getProperty(Property.Permission.RW));
-        } catch (FileNotFoundException cause) {
-            throw new FileSystemException(
-                    "ARQUIVO NÃO ENCONTRADO!",
-                    cause);
-        } catch (IOException cause) {
-            throw new FileSystemException(
-                    "PROBLEMAS AO LER ARQUIVO",
-                    cause);
-        }
+        return new RandomAccessFile(path.toFile(), p.getProperty(Property.Permission.RW));
     }
 
     public static void close(RandomAccessFile file) throws FileSystemException {
@@ -48,9 +43,7 @@ final class DataSource {
             if (file != null)
                 file.close();
         } catch (IOException cause) {
-            throw new FileSystemException(
-                    "PROBLEMAS AO FECHAR ARQUIVO",
-                    cause);
+            throw new FileSystemException("PROBLEMAS AO FECHAR ARQUIVO", cause);
         }
     }
 }
