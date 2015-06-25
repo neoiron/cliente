@@ -27,7 +27,7 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
                 source.seek(FILE_BEGIN);
 
                 do {
-                    fields = source.readLine().split(String.valueOf(CSV_SEPARATOR));
+                    fields = source.readLine().split(CSV_SPLIT_REGEX);
                     found = new Municipio(fields[1], fields[2]);
 
                     if (found.equals(domain)) {
@@ -48,7 +48,43 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
     @Override
     public void atualizar(Municipio domain) throws MunicipioException {
+        try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
+            long size = source.length();
 
+            if (size > 0) {
+                StringBuilder content = new StringBuilder();
+                String[] fields;
+                String line;
+                Integer id;
+                long pos;
+                boolean found;
+
+                source.seek(FILE_BEGIN);
+
+                do {
+                    line = source.readLine();
+                    fields = line.split(CSV_SPLIT_REGEX);
+                    id = Integer.valueOf(fields[0]);
+                    found = id.equals(domain.getId());
+
+                    if (found) {
+                        content.append(domain.toCSV(CSV_SEPARATOR));
+                    } else {
+                        content.append(line).append(NEW_LINE);
+                    }
+
+                    pos = source.getFilePointer();
+                } while (pos < size);
+
+                if (found) {
+                    source.seek(FILE_BEGIN);
+                    source.setLength(FILE_EMPTY);
+                    source.writeBytes(content.toString());
+                }
+            }
+        } catch (IOException cause) {
+            throw new MunicipioException("PROBLEMAS AO ATUALIZAR MUNICÍPIO!", cause);
+        }
     }
 
     @Override

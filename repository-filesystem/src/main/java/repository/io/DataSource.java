@@ -14,7 +14,7 @@ import repository.exception.FileSystemException;
 final class DataSource {
 
     interface Property {
-        String FILE_NAME = "io.properties";
+        String FILE_NAME = "conf/io.properties";
         String SOURCE = "io.source";
 
         interface Permission {
