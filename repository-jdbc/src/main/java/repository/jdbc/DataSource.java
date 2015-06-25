@@ -14,7 +14,7 @@ import repository.exception.DatabaseException;
 final class DataSource {
 
     interface JDBC {
-        String FILE_NAME = "jdbc.properties";
+        String FILE_NAME = "conf/jdbc.properties";
         String DRIVER = "jdbc.driver";
         String URL = "jdbc.driver";
         String USER = "jdbc.user";
