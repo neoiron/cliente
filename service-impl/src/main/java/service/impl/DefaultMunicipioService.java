@@ -9,7 +9,7 @@ import domain.exception.MunicipioException;
 import domain.model.Municipio;
 import domain.model.UFVO;
 
-public class DefaultMunicipioService extends AbstractService<Municipio, MunicipioException> implements MunicipioService {
+public class DefaultMunicipioService extends DefaultService<Municipio, MunicipioException> implements MunicipioService {
 
     private MunicipioDAO dao;
 

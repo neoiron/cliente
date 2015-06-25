@@ -4,11 +4,11 @@ import repository.DAO;
 import service.Service;
 import domain.model.Entidade;
 
-abstract class AbstractService<T extends Entidade<?, E>, E extends Throwable> implements Service<T, E> {
+abstract class DefaultService<T extends Entidade<?, E>, E extends Throwable> implements Service<T, E> {
 
     private DAO<T, E> dao;
 
-    protected AbstractService(DAO<T, E> dao) {
+    protected DefaultService(DAO<T, E> dao) {
         super();
 
         this.dao = dao;
