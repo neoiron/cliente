@@ -7,7 +7,7 @@ import domain.exception.MunicipioException;
 import domain.model.Municipio;
 import domain.model.UFVO;
 
-public class FileSystemMunicipioDAO implements MunicipioDAO {
+public class FileMunicipioDAO implements MunicipioDAO {
 
     @Override
     public void inserir(Municipio domain) throws MunicipioException {

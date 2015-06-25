@@ -1,6 +1,6 @@
 package repository.io;
 
-abstract class FileSystemDAO {
+abstract class FileDAO {
 
     public static final char CSV_SEPARATOR = ';';
 
