@@ -10,4 +10,15 @@ abstract class FileDAO {
     public static final long FILE_EMPTY = 0L;
 
     public static final char NEW_LINE = '\n';
+
+    interface Fields {
+        enum Municipio {
+            ID, NOME, UF;
+        }
+        // TODO Bairro
+        // TODO Logradouro
+        // TODO Endereco
+        // TODO Cliente
+        // TODO Contato
+    }
 }

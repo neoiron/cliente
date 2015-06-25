@@ -28,7 +28,9 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 do {
                     fields = source.readLine().split(CSV_SPLIT_REGEX);
-                    found = new Municipio(fields[1], fields[2]);
+                    found = new Municipio(
+                            fields[Fields.Municipio.NOME.ordinal()], 
+                            fields[Fields.Municipio.UF.ordinal()]);
 
                     if (found.equals(domain)) {
                         throw new MunicipioException("Município duplicado!");
@@ -64,7 +66,7 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
                 do {
                     line = source.readLine();
                     fields = line.split(CSV_SPLIT_REGEX);
-                    id = Integer.valueOf(fields[0]);
+                    id = Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]);
                     found = id.equals(domain.getId());
 
                     if (found) {
@@ -104,7 +106,7 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
                 do {
                     line = source.readLine();
                     fields = line.split(CSV_SPLIT_REGEX);
-                    id = Integer.valueOf(fields[0]);
+                    id = Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]);
 
                     if (!id.equals(domain.getId())) {
                         content.append(line).append(NEW_LINE);
