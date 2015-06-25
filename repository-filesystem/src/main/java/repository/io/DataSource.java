@@ -42,4 +42,8 @@ final class DataSource {
                     cause);
         }
     }
+
+    public static void close(RandomAccessFile file) throws FileSystemException {
+
+    }
 }
