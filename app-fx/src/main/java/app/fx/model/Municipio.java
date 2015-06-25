@@ -19,4 +19,16 @@ public class Municipio {
         this.nome = new SimpleStringProperty(String.valueOf(domain.getNome()));
         this.uf = new SimpleObjectProperty<>(domain.getUf());
     }
+
+    public ObservableObjectValue<domain.model.Municipio> getDomain() {
+        return domain;
+    }
+
+    public ObservableStringValue getNome() {
+        return nome;
+    }
+
+    public ObservableObjectValue<UFVO> getUf() {
+        return uf;
+    }
 }
