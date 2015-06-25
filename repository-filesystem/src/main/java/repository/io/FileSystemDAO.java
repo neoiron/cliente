@@ -9,4 +9,9 @@ abstract class FileSystemDAO<T extends Domain<E>, E extends Throwable> implement
     public void inserir(T domain) throws E {
         
     }
+
+    @Override
+    public void atualizar(T domain) throws E {
+        
+    }
 }
