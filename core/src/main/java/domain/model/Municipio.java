@@ -1,8 +1,9 @@
 package domain.model;
 
+import domain.exception.MunicipioException;
 import domain.exception.MunicipioInvalidoException;
 
-public class Municipio extends Entidade<Integer, MunicipioInvalidoException> implements Comparable<Municipio> {
+public class Municipio extends Entidade<Integer, MunicipioException> implements Comparable<Municipio> {
 
     private CharSequence nome;
     private UFVO uf;
