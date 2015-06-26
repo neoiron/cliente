@@ -79,6 +79,7 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 // Leitura do index de ID.
                 line = source.readLine();
+                content.append(line).append(NEW_LINE);
 
                 do {
                     line = source.readLine();
@@ -121,6 +122,7 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 // Leitura do index de ID.
                 line = source.readLine();
+                content.append(line).append(NEW_LINE);
 
                 do {
                     line = source.readLine();
