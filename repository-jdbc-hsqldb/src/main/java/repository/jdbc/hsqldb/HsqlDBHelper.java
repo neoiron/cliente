@@ -44,8 +44,9 @@ public final class HsqlDBHelper {
     }
 
     public static void stopServer() {
-        if (HSQL_SERVER.isSilent()) {
+        if (isHsqlDB()) {
             HSQL_SERVER.stop();
+            HSQL_SERVER.shutdown();
         }
     }
 }
