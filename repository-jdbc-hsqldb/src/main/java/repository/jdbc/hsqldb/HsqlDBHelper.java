@@ -1,5 +1,8 @@
 package repository.jdbc.hsqldb;
 
-public class HsqlDBHelper {
+public final class HsqlDBHelper {
 
+    private HsqlDBHelper() {
+        super();
+    }
 }
