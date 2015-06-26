@@ -28,14 +28,14 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 source.seek(FILE_BEGIN);
 
+                line = source.readLine();
+                if (line.contains(INDEX_ID)) {
+                    id = Integer.valueOf(line.substring(1));
+                    content.append(INDEX_ID).append(++id).append(NEW_LINE);
+                }
+
                 do {
                     line = source.readLine();
-                    if (line.contains(INDEX_ID)) {
-                        id = Integer.valueOf(line.substring(1));
-                        content.append(INDEX_ID).append(++id).append(NEW_LINE);
-                        continue;
-                    }
-
                     fields = line.split(CSV_SPLIT_REGEX);
                     found = new Municipio(
                             fields[Fields.Municipio.NOME.ordinal()], 
@@ -75,12 +75,11 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 source.seek(FILE_BEGIN);
 
+                // Leitura do index de ID.
+                line = source.readLine();
+
                 do {
                     line = source.readLine();
-                    if (line.contains(INDEX_ID)) {
-                        continue;
-                    }
-
                     fields = line.split(CSV_SPLIT_REGEX);
                     id = Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]);
                     found = id.equals(domain.getId());
@@ -118,12 +117,11 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 source.seek(FILE_BEGIN);
 
+                // Leitura do index de ID.
+                line = source.readLine();
+
                 do {
                     line = source.readLine();
-                    if (line.contains(INDEX_ID)) {
-                        continue;
-                    }
-
                     fields = line.split(CSV_SPLIT_REGEX);
                     id = Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]);
 
@@ -156,12 +154,11 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 source.seek(FILE_BEGIN);
 
+                // Leitura do index de ID.
+                line = source.readLine();
+
                 do {
                     line = source.readLine();
-                    if (line.contains(INDEX_ID)) {
-                        continue;
-                    }
-
                     fields = line.split(CSV_SPLIT_REGEX);
                     field = fields[Fields.Municipio.UF.ordinal()];
 
