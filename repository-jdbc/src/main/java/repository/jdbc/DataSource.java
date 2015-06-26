@@ -3,8 +3,9 @@ package repository.jdbc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -63,10 +64,9 @@ final class DataSource {
                 HSQL_SERVER.setLogWriter(null);
                 HSQL_SERVER.setSilent(true);
                 HSQL_SERVER.setDatabaseName(0, "cliente");
-                HSQL_SERVER.setDatabasePath(0, "file:clientedb");
+                HSQL_SERVER.setDatabasePath(0, "file:target/clientedb");
 
                 HSQL_SERVER.start();
-                System.out.println("HSQLDB iniciado!");
             }
         } catch (Exception cause) {
             cause.printStackTrace();
@@ -74,18 +74,17 @@ final class DataSource {
     }
 
     public static void createHsqlDBTable(String scriptDDL) {
-        URL url = DataSource.class.getResource(scriptDDL);
+        InputStream in = DataSource.class.getResourceAsStream(scriptDDL);
 
-        createHsqlDBTable(url);
+        createHsqlDBTable(in);
     }
 
-    public static void createHsqlDBTable(URL scriptDDL) {
+    public static void createHsqlDBTable(InputStream scriptDDL) {
         try {
             if (HSQL_SERVER != null) {
                 try (Connection c = DataSource.openConnection();
                      Statement query = c.createStatement();
-                     Reader in = new FileReader(scriptDDL.toExternalForm());
-                     BufferedReader ddl = new BufferedReader(in)) {
+                     BufferedReader ddl = new BufferedReader(new InputStreamReader(scriptDDL))) {
         
                     while (ddl.ready()) {
                         query.execute(ddl.readLine());
@@ -115,5 +114,16 @@ final class DataSource {
         } catch (SQLException cause) {
             throw new DatabaseException("PROBLEMAS AO FECHAR CONEXÃO COM BANCO DE DADOS!", cause);
         }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        if (HSQL_SERVER != null) {
+            HSQL_SERVER.stop();
+            HSQL_SERVER.shutdown();
+            HSQL_SERVER = null;
+        }
+
+        super.finalize();
     }
 }

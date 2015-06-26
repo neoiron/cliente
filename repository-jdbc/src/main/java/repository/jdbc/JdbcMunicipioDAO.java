@@ -29,8 +29,8 @@ public class JdbcMunicipioDAO extends JdbcDAO<Municipio, MunicipioException> imp
     }
 
     @Override
-    protected MunicipioException getExceptionInsert() {
-        return new MunicipioException("PROBLEMAS AO INSERIR MUNICÍPIO NO BANCO DE DADOS!");
+    protected MunicipioException getExceptionInsert(Throwable cause) {
+        return new MunicipioException("PROBLEMAS AO INSERIR MUNICÍPIO NO BANCO DE DADOS!", cause);
     }
 
     @Override
@@ -45,13 +45,29 @@ public class JdbcMunicipioDAO extends JdbcDAO<Municipio, MunicipioException> imp
     }
 
     @Override
+    protected String getSQLSelectId() {
+        return "SELECT id_municipio FROM municipio WHERE nm_municipio = ? AND id_uf = ?";
+    }
+
+    @Override
+    protected void prepareStatementSelectId(PreparedStatement query, Municipio domain) throws SQLException {
+        query.setString(1, domain.getNome().toString());
+        query.setString(2, domain.getUf().toString());
+    }
+
+    @Override
+    protected void setId(ResultSet resultSet, Municipio domain) throws SQLException {
+        domain.setId(resultSet.getInt("id_municipio"));
+    }
+
+    @Override
     protected MunicipioException getFailUpdate() {
         return new MunicipioException("Deveria atualizar e não atualizou!");
     }
 
     @Override
-    protected MunicipioException getExceptionUpdate() {
-        return new MunicipioException("PROBLEMAS AO ATUALIZAR MUNICÍPIO NO BANCO DE DADOS!");
+    protected MunicipioException getExceptionUpdate(Throwable cause) {
+        return new MunicipioException("PROBLEMAS AO ATUALIZAR MUNICÍPIO NO BANCO DE DADOS!", cause);
     }
 
     @Override
@@ -72,8 +88,8 @@ public class JdbcMunicipioDAO extends JdbcDAO<Municipio, MunicipioException> imp
     }
 
     @Override
-    protected MunicipioException getExceptionDelete() {
-        return new MunicipioException("PROBLEMAS AO APAGAR MUNICÍPIO NO BANCO DE DADOS!");
+    protected MunicipioException getExceptionDelete(Throwable cause) {
+        return new MunicipioException("PROBLEMAS AO APAGAR MUNICÍPIO NO BANCO DE DADOS!", cause);
     }
 
     @Override

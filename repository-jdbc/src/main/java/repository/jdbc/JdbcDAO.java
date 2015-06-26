@@ -2,6 +2,7 @@ package repository.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import domain.model.Entidade;
@@ -11,7 +12,7 @@ import repository.exception.DatabaseException;
 abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements DAO<T, E> {
 
     protected abstract E getFailInsert();
-    protected abstract E getExceptionInsert();
+    protected abstract E getExceptionInsert(Throwable cause);
     protected abstract String getSQLInsert();
     protected abstract void prepareStatementInsert(final PreparedStatement query, final T domain) throws SQLException;
 
@@ -37,17 +38,35 @@ abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements
 
                 if (rows == 0)
                     throw getFailInsert();
+
+                setId(domain, c);
             } finally {
                 DataSource.close(ps);
                 DataSource.close(c);
             }
         } catch (SQLException | DatabaseException cause) {
-            throw getExceptionInsert();
+            throw getExceptionInsert(cause);
+        }
+    }
+
+    protected abstract String getSQLSelectId();
+    protected abstract void prepareStatementSelectId(PreparedStatement query, final T domain) throws SQLException;
+    protected abstract void setId(ResultSet resultSet, final T domain) throws SQLException;
+
+    private void setId(T domain, Connection c) throws SQLException {
+        PreparedStatement query = c.prepareStatement(getSQLSelectId());
+
+        prepareStatementSelectId(query, domain);
+
+        ResultSet rs = query.executeQuery();
+
+        if (rs.next()) {
+            setId(rs, domain);
         }
     }
 
     protected abstract E getFailUpdate();
-    protected abstract E getExceptionUpdate();
+    protected abstract E getExceptionUpdate(Throwable cause);
     protected abstract String getSQLUpdate();
     protected abstract void prepareStatementUpdate(PreparedStatement query, final T domain) throws SQLException;
 
@@ -63,12 +82,12 @@ abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements
             if (rows == 0)
                 throw getFailUpdate();
         } catch (SQLException | DatabaseException cause) {
-            throw getExceptionUpdate();
+            throw getExceptionUpdate(cause);
         }
     }
 
     protected abstract E getFailDelete();
-    protected abstract E getExceptionDelete();
+    protected abstract E getExceptionDelete(Throwable cause);
     protected abstract String getSQLDelete();
     protected abstract void prepareStatementDelete(PreparedStatement query, final T domain) throws SQLException;
 
@@ -84,19 +103,7 @@ abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements
             if (rows == 0)
                 throw getFailDelete();
         } catch (SQLException | DatabaseException cause) {
-            throw getExceptionDelete();
+            throw getExceptionDelete(cause);
         }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        if (DataSource.HSQL_SERVER != null) {
-            DataSource.HSQL_SERVER.stop();
-            DataSource.HSQL_SERVER.shutdown();
-            DataSource.HSQL_SERVER = null;
-            System.out.println("HSQLDB parado!");
-        }
-
-        super.finalize();
     }
 }
