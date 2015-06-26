@@ -17,33 +17,47 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
     @Override
     public void inserir(Municipio domain) throws MunicipioException {
         try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
+            final StringBuilder content = new StringBuilder();
             long size = source.length();
-            int line = 1;
+            int id = 1;
 
             if (size > 0) {
                 Municipio found;
                 String[] fields;
+                String line;
                 long pos;
 
                 source.seek(FILE_BEGIN);
 
+                line = source.readLine();
+
+                if (line.contains("#")) {
+                    id = Integer.valueOf(line.substring(1));
+                    content.append("#").append(++id);
+                } else {
+                    content.append("#1");
+                }
+
                 do {
-                    fields = source.readLine().split(CSV_SPLIT_REGEX);
+                    line = source.readLine();
+                    fields = line.split(CSV_SPLIT_REGEX);
                     found = new Municipio(
                             fields[Fields.Municipio.NOME.ordinal()], 
                             fields[Fields.Municipio.UF.ordinal()]);
+
+                    content.append(line).append(NEW_LINE);
 
                     if (found.equals(domain)) {
                         throw new MunicipioException("Município duplicado!");
                     }
 
                     pos = source.getFilePointer();
-                    ++line;
                 } while (pos < size);
             }
 
-            domain.setId(line);
-            source.writeBytes(domain.toCSV(CSV_SEPARATOR));
+            domain.setId(id);
+            content.append(domain.toCSV(CSV_SEPARATOR));
+            source.writeBytes(content.toString());
         } catch (IOException cause) {
             throw new MunicipioException("PROBLEMAS AO INSERIR MUNICÍPIO!", cause);
         }
