@@ -9,4 +9,8 @@ public final class HsqlDBHelper {
     public static void startServer() {
         
     }
+
+    public static void stopServer() {
+        
+    }
 }
