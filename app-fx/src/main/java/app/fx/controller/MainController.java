@@ -2,6 +2,7 @@ package app.fx.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 public class MainController extends AbstractController {
 
@@ -41,6 +42,12 @@ public class MainController extends AbstractController {
 
     @FXML
     public void onClickFecharMenu(ActionEvent event) {
-        System.out.println("Menu fechar funcionando!");
+        confirmAndClose(event);
+    }
+
+    @Override
+    public void setStage(Stage stage) {
+        stage.setOnCloseRequest(this::confirmAndClose);
+        super.setStage(stage);
     }
 }
