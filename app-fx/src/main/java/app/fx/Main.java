@@ -1,10 +1,10 @@
 package app.fx;
 
+import repository.jdbc.hsqldb.HsqlDBHelper;
 import app.fx.util.FXMLHelper;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import static app.fx.controller.MainController.VIEW_URL;
 import static app.fx.controller.MainController.VIEW_TITLE;
 import static app.fx.controller.MainController.STYLE_URL;
@@ -24,6 +24,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        HsqlDBHelper.startServer("cliente");
         launch(args);
     }
 }
