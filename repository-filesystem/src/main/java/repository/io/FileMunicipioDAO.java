@@ -85,9 +85,9 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
                     line = source.readLine();
                     fields = line.split(CSV_SPLIT_REGEX);
                     id = Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]);
-                    found = id.equals(domain.getId());
 
-                    if (found) {
+                    if (id.equals(domain.getId())) {
+                        found = true;
                         content.append(domain.toCSV(CSV_SEPARATOR));
                     } else {
                         content.append(line).append(NEW_LINE);
