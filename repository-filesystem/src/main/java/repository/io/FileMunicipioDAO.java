@@ -33,9 +33,7 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                 if (line.contains("#")) {
                     id = Integer.valueOf(line.substring(1));
-                    content.append("#").append(++id);
-                } else {
-                    content.append("#1");
+                    content.append("#").append(++id).append(NEW_LINE);
                 }
 
                 do {
@@ -53,6 +51,8 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
                     pos = source.getFilePointer();
                 } while (pos < size);
+            } else {
+                content.append("#").append(id).append(NEW_LINE);
             }
 
             domain.setId(id);
