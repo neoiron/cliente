@@ -60,9 +60,9 @@ final public class FXMLHelper {
     }
 
     private static URL[] getResources(String... r) {
-        URL[] rs = new URL[r.length];
+        URL[] rs = new URL[r != null ? r.length : 0];
 
-        for (int i = 0; i < r.length; i++) {
+        for (int i = 0; i < rs.length; i++) {
             rs[i] = FXMLHelper.class.getResource(r[i]);
         }
 
