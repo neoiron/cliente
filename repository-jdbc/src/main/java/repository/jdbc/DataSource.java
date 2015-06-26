@@ -15,8 +15,9 @@ final class DataSource {
 
     interface JDBC {
         String FILE_NAME = "conf/jdbc.properties";
+        String DATABASE = "jdbc.database";
         String DRIVER = "jdbc.driver";
-        String URL = "jdbc.driver";
+        String URL = "jdbc.url";
         String USER = "jdbc.user";
         String PASSWORD = "jdbc.password";
     }
@@ -29,6 +30,8 @@ final class DataSource {
         Properties p = new Properties();
         try (Reader r = new FileReader(JDBC.FILE_NAME)) {
             p.load(r);
+
+            useHsqlDB(p);
 
             Class.forName(p.getProperty(JDBC.DRIVER));
 
@@ -49,6 +52,10 @@ final class DataSource {
                     "PROBLEMAS AO CARREGAR O DRIVER!", 
                     cause);
         }
+    }
+
+    private static void useHsqlDB(Properties p) {
+        
     }
 
     public static void close(Statement statement) throws DatabaseException {
