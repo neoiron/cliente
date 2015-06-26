@@ -75,7 +75,22 @@ public class MunicipioController extends AbstractController {
         mi.setOnAction(this::onDeleteAction);
 
         mi = cm.getItems().get(3);  
-        mi.setOnAction(e -> System.out.println("Menu 'selecionar todos' municipio funcionando!"));
+        mi.setOnAction(e -> {
+            TableViewSelectionModel<app.fx.model.Municipio> model;
+            int size, sizeSelected;
+
+            model = tvMUNICIPIOS.getSelectionModel();
+            size = tvMUNICIPIOS.getItems().size();
+            sizeSelected = model.getSelectedItems().size();
+
+            if (size != sizeSelected) {
+                ((MenuItem) e.getSource()).setText("Limpar seleção");
+                model.selectAll();
+            } else {
+                ((MenuItem) e.getSource()).setText("Selecionar todos");
+                model.clearSelection();
+            }
+        });
     }
 
     private void initView() {
@@ -169,8 +184,8 @@ public class MunicipioController extends AbstractController {
                 Dialogs
                     .create()
                     .title(getStage().getTitle())
-                    .masthead("Apagando...")
-                    .message("Favor, selecione pelo menos 1 município para apagar!")
+                    .masthead("Alterando...")
+                    .message("Favor, selecione pelo menos 1 município para alterar!")
                     .showWarning();
                 break;
             case 1:
@@ -180,6 +195,14 @@ public class MunicipioController extends AbstractController {
                 tfNOME.setText(m.getNome().get());
                 tfNOME.requestFocus();
                 tfNOME.selectAll();
+                break;
+            default:
+                Dialogs
+                .create()
+                .title(getStage().getTitle())
+                .masthead("Alterando...")
+                .message("Favor, selecione apenas 1 município para alterar!")
+                .showWarning();
                 break;
             }
         } catch (Exception cause) {
@@ -273,5 +296,7 @@ public class MunicipioController extends AbstractController {
     private void clearForm() {
         tfNOME.setText(null);
         tfNOME.requestFocus();
+        tvMUNICIPIOS.getSelectionModel().clearSelection();
+        aalterar = null;
     }
 }
