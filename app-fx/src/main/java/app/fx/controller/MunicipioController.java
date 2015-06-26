@@ -119,8 +119,7 @@ public class MunicipioController extends AbstractController {
     private void onChangeUFAction(ActionEvent e) {
         try {
             loadTable();
-            tfNOME.requestFocus();
-            tfNOME.selectAll();
+            clearForm();
         } catch (Exception cause) {
             Dialogs
                 .create()
