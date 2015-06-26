@@ -15,6 +15,14 @@ import domain.model.UFVO;
 
 public class JdbcMunicipioDAO extends JdbcDAO<Municipio, MunicipioException> implements MunicipioDAO {
 
+    private static final String SCRIPT_DDL = "/repository/jdbc/municipio.ddl";
+
+    public JdbcMunicipioDAO() {
+        super();
+
+        DataSource.createHsqlDBTable(SCRIPT_DDL);
+    }
+
     @Override
     protected MunicipioException getFailInsert() {
         return new MunicipioException("Deveria inserir e não inseriu!");

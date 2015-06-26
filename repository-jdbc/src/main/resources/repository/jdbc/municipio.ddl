@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS 'municipio' ('id_municipio' INT NOT NULL AUTO_INCREMENT, 'nm_municpio' VARCHAR(80) NOT NULL, 'id_uf' CHAR(2) NOT NULL, PRIMARY KEY ('id_municipio'));

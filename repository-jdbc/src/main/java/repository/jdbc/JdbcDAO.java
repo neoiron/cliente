@@ -15,6 +15,12 @@ abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements
     protected abstract String getSQLInsert();
     protected abstract void prepareStatementInsert(final PreparedStatement query, final T domain) throws SQLException;
 
+    protected JdbcDAO() {
+        super();
+
+        DataSource.supportHsqlDB();
+    }
+
     @Override
     public void inserir(T domain) throws E {
         Connection c;
@@ -80,5 +86,17 @@ abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements
         } catch (SQLException | DatabaseException cause) {
             throw getExceptionDelete();
         }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        if (DataSource.HSQL_SERVER != null) {
+            DataSource.HSQL_SERVER.stop();
+            DataSource.HSQL_SERVER.shutdown();
+            DataSource.HSQL_SERVER = null;
+            System.out.println("HSQLDB parado!");
+        }
+
+        super.finalize();
     }
 }

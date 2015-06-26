@@ -1,19 +1,23 @@
 package repository.jdbc;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.hsqldb.Server;
+
 import repository.exception.DatabaseException;
 
 final class DataSource {
 
-    interface JDBC {
+    interface Jdbc {
         String FILE_NAME = "conf/jdbc.properties";
         String DATABASE = "jdbc.database";
         String DRIVER = "jdbc.driver";
@@ -28,34 +32,69 @@ final class DataSource {
 
     public static Connection openConnection() throws DatabaseException {
         Properties p = new Properties();
-        try (Reader r = new FileReader(JDBC.FILE_NAME)) {
+        try (Reader r = new FileReader(Jdbc.FILE_NAME)) {
             p.load(r);
 
-            useHsqlDB(p);
+            Class.forName(p.getProperty(Jdbc.DRIVER));
 
-            Class.forName(p.getProperty(JDBC.DRIVER));
-
-            return DriverManager.getConnection(
-                    p.getProperty(JDBC.URL), 
-                    p.getProperty(JDBC.USER),
-                    p.getProperty(JDBC.PASSWORD));
+            return DriverManager.getConnection(p.getProperty(Jdbc.URL), p.getProperty(Jdbc.USER),
+                    p.getProperty(Jdbc.PASSWORD));
         } catch (SQLException cause) {
-            throw new DatabaseException(
-                    "PROBLEMAS AO ABRIR CONEXÃO COM BANCO DE DADOS!", 
-                    cause);
+            throw new DatabaseException("PROBLEMAS AO ABRIR CONEXÃO COM BANCO DE DADOS!", cause);
         } catch (IOException cause) {
-            throw new DatabaseException(
-                    "PROBLEMAS AO ABRIR 'jdbc.properties'!", 
-                    cause);
+            throw new DatabaseException("PROBLEMAS AO ABRIR 'jdbc.properties'!", cause);
         } catch (ClassNotFoundException cause) {
-            throw new DatabaseException(
-                    "PROBLEMAS AO CARREGAR O DRIVER!", 
-                    cause);
+            throw new DatabaseException("PROBLEMAS AO CARREGAR O DRIVER!", cause);
         }
     }
 
-    private static void useHsqlDB(Properties p) {
+    public static Server HSQL_SERVER = null;
+
+    public static void supportHsqlDB() {
+        Properties p = new Properties();
+        try (Reader r = new FileReader(Jdbc.FILE_NAME)) {
+            p.load(r);
+
+            String database = p.getProperty(Jdbc.DATABASE);
+
+            if ("hsqldb".equalsIgnoreCase(database)) {
+                HSQL_SERVER = new Server();
+
+                HSQL_SERVER.setLogWriter(null);
+                HSQL_SERVER.setSilent(true);
+                HSQL_SERVER.setDatabaseName(0, "cliente");
+                HSQL_SERVER.setDatabasePath(0, "file:clientedb");
+
+                HSQL_SERVER.start();
+                System.out.println("HSQLDB iniciado!");
+            }
+        } catch (Exception cause) {
+            cause.printStackTrace();
+        }
+    }
+
+    public static void createHsqlDBTable(String scriptDDL) {
+        URL url = DataSource.class.getResource(scriptDDL);
+
+        createHsqlDBTable(url);
+    }
+
+    public static void createHsqlDBTable(URL scriptDDL) {
+        try {
+            if (HSQL_SERVER != null) {
+                try (Connection c = DataSource.openConnection();
+                     Statement query = c.createStatement();
+                     Reader in = new FileReader(scriptDDL.toExternalForm());
+                     BufferedReader ddl = new BufferedReader(in)) {
         
+                    while (ddl.ready()) {
+                        query.execute(ddl.readLine());
+                    }
+                }
+            }
+        } catch (Exception cause) {
+            cause.printStackTrace();
+        }
     }
 
     public static void close(Statement statement) throws DatabaseException {
@@ -64,9 +103,7 @@ final class DataSource {
                 statement.close();
             }
         } catch (SQLException cause) {
-            throw new DatabaseException(
-                    "PROBLEMAS AO FECHAR CONSULTA!", 
-                    cause);
+            throw new DatabaseException("PROBLEMAS AO FECHAR CONSULTA!", cause);
         }
     }
 
@@ -76,9 +113,7 @@ final class DataSource {
                 connection.close();
             }
         } catch (SQLException cause) {
-            throw new DatabaseException(
-                    "PROBLEMAS AO FECHAR CONEXÃO COM BANCO DE DADOS!", 
-                    cause);
+            throw new DatabaseException("PROBLEMAS AO FECHAR CONEXÃO COM BANCO DE DADOS!", cause);
         }
     }
 }
