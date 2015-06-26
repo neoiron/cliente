@@ -35,6 +35,8 @@ public class MunicipioController extends AbstractController {
 
     private MunicipioService service;
 
+    private Municipio aalterar = null;
+
     @FXML
     private ComboBox<UFVO> cbUF;
 
@@ -67,7 +69,7 @@ public class MunicipioController extends AbstractController {
         MenuItem mi;
 
         mi = cm.getItems().get(0);
-        mi.setOnAction(e -> System.out.println("Menu 'atualizar' municipio funcionando!"));
+        mi.setOnAction(this::onUpdateAction);
 
         mi = cm.getItems().get(1);
         mi.setOnAction(this::onDeleteAction);
@@ -118,7 +120,12 @@ public class MunicipioController extends AbstractController {
     private void onSaveAction(ActionEvent e) {
         Municipio domain;
         try {
-            domain = new Municipio();
+            if (aalterar == null) {
+                domain = new Municipio();
+            } else {
+                domain = aalterar;
+                aalterar = null;
+            }
 
             domain.setNome(tfNOME.getText());
             domain.setUf(cbUF.getValue());
@@ -146,12 +153,44 @@ public class MunicipioController extends AbstractController {
         }
     }
 
-
     @FXML
     private void onUpdateAction(ActionEvent e) {
-        
-    }
+        TableViewSelectionModel<app.fx.model.Municipio> model;
+        ObservableList<Integer> indices;
+        int size;
 
+        try {
+            model = tvMUNICIPIOS.getSelectionModel();
+            indices = model.getSelectedIndices();
+            size = indices.size();
+
+            switch (size) {
+            case 0:
+                Dialogs
+                    .create()
+                    .title(getStage().getTitle())
+                    .masthead("Apagando...")
+                    .message("Favor, selecione pelo menos 1 município para apagar!")
+                    .showWarning();
+                break;
+            case 1:
+                app.fx.model.Municipio m = model.getSelectedItem();
+
+                aalterar = m.getDomain().get();
+                tfNOME.setText(m.getNome().get());
+                tfNOME.requestFocus();
+                tfNOME.selectAll();
+                break;
+            }
+        } catch (Exception cause) {
+            Dialogs
+                .create()
+                .title(getStage().getTitle())
+                .masthead(cause.getMessage())
+                .message("OPS...")
+                .showException(cause);
+        }
+    }
 
     @FXML
     private void onDeleteAction(ActionEvent e) {
