@@ -9,6 +9,8 @@ abstract class FileDAO {
     public static final long FILE_BEGIN = 0L;
     public static final long FILE_EMPTY = 0L;
 
+    public static final String INDEX_ID = "#";
+
     public static final char NEW_LINE = '\n';
 
     interface Fields {

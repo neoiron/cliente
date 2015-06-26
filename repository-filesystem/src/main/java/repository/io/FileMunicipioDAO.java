@@ -18,26 +18,24 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
     public void inserir(Municipio domain) throws MunicipioException {
         try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
             final StringBuilder content = new StringBuilder();
-            long size = source.length();
+            long size = source.length(), pos = 0;
             int id = 1;
 
-            if (size > 0) {
+            if (pos < size) {
                 Municipio found;
                 String[] fields;
                 String line;
-                long pos;
 
                 source.seek(FILE_BEGIN);
 
-                line = source.readLine();
-
-                if (line.contains("#")) {
-                    id = Integer.valueOf(line.substring(1));
-                    content.append("#").append(++id).append(NEW_LINE);
-                }
-
                 do {
                     line = source.readLine();
+                    if (line.contains(INDEX_ID)) {
+                        id = Integer.valueOf(line.substring(1));
+                        content.append(INDEX_ID).append(++id).append(NEW_LINE);
+                        continue;
+                    }
+
                     fields = line.split(CSV_SPLIT_REGEX);
                     found = new Municipio(
                             fields[Fields.Municipio.NOME.ordinal()], 
@@ -52,7 +50,7 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
                     pos = source.getFilePointer();
                 } while (pos < size);
             } else {
-                content.append("#").append(id).append(NEW_LINE);
+                content.append(INDEX_ID).append(id).append(NEW_LINE);
             }
 
             domain.setId(id);
@@ -66,20 +64,23 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
     @Override
     public void atualizar(Municipio domain) throws MunicipioException {
         try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
-            long size = source.length();
+            long size = source.length(), pos = 0;
 
-            if (size > 0) {
+            if (pos < size) {
                 StringBuilder content = new StringBuilder();
                 String[] fields;
                 String line;
                 Integer id;
-                long pos;
-                boolean found;
+                boolean found = false;
 
                 source.seek(FILE_BEGIN);
 
                 do {
                     line = source.readLine();
+                    if (line.contains(INDEX_ID)) {
+                        continue;
+                    }
+
                     fields = line.split(CSV_SPLIT_REGEX);
                     id = Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]);
                     found = id.equals(domain.getId());
@@ -107,19 +108,22 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
     @Override
     public void apagar(Municipio domain) throws MunicipioException {
         try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
-            long size = source.length();
+            long size = source.length(), pos = 0;
 
-            if (size > 0) {
+            if (pos < size) {
                 StringBuilder content = new StringBuilder();
                 String[] fields;
                 String line;
                 Integer id;
-                long pos;
 
                 source.seek(FILE_BEGIN);
 
                 do {
                     line = source.readLine();
+                    if (line.contains(INDEX_ID)) {
+                        continue;
+                    }
+
                     fields = line.split(CSV_SPLIT_REGEX);
                     id = Integer.valueOf(fields[Fields.Municipio.ID.ordinal()]);
 
@@ -143,18 +147,21 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
     public Set<Municipio> selecionar(UFVO uf) throws MunicipioException {
         try (RandomAccessFile source = DataSource.openWriteableFile(FILE_NAME)) {
             Set<Municipio> municipios = new TreeSet<>();
-            long size = source.length();
+            long size = source.length(), pos = 0;
 
-            if (size > 0) {
+            if (pos < size) {
                 Municipio municipio;
                 String[] fields;
                 String line, field;
-                long pos;
 
                 source.seek(FILE_BEGIN);
 
                 do {
                     line = source.readLine();
+                    if (line.contains(INDEX_ID)) {
+                        continue;
+                    }
+
                     fields = line.split(CSV_SPLIT_REGEX);
                     field = fields[Fields.Municipio.UF.ordinal()];
 
