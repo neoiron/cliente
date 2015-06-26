@@ -55,6 +55,8 @@ public class FileMunicipioDAO extends FileDAO implements MunicipioDAO {
 
             domain.setId(id);
             content.append(domain.toCSV(CSV_SEPARATOR));
+
+            source.setLength(FILE_EMPTY);
             source.writeBytes(content.toString());
         } catch (IOException cause) {
             throw new MunicipioException("PROBLEMAS AO INSERIR MUNICÍPIO!", cause);
