@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import domain.model.Entidade;
 import repository.DAO;
 import repository.exception.DatabaseException;
+import domain.model.Entidade;
 
 abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements DAO<T, E> {
 
@@ -18,8 +18,6 @@ abstract class JdbcDAO<T extends Entidade<?, E>, E extends Throwable> implements
 
     protected JdbcDAO() {
         super();
-
-        DataSource.supportHsqlDB();
     }
 
     @Override

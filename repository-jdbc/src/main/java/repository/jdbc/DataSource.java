@@ -12,8 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.hsqldb.Server;
-
 import repository.exception.DatabaseException;
 
 final class DataSource {
@@ -49,30 +47,6 @@ final class DataSource {
         }
     }
 
-    public static Server HSQL_SERVER = null;
-
-    public static void supportHsqlDB() {
-        Properties p = new Properties();
-        try (Reader r = new FileReader(Jdbc.FILE_NAME)) {
-            p.load(r);
-
-            String database = p.getProperty(Jdbc.DATABASE);
-
-            if ("hsqldb".equalsIgnoreCase(database)) {
-                HSQL_SERVER = new Server();
-
-                HSQL_SERVER.setLogWriter(null);
-                HSQL_SERVER.setSilent(true);
-                HSQL_SERVER.setDatabaseName(0, "cliente");
-                HSQL_SERVER.setDatabasePath(0, "file:target/clientedb");
-
-                HSQL_SERVER.start();
-            }
-        } catch (Exception cause) {
-            cause.printStackTrace();
-        }
-    }
-
     public static void createHsqlDBTable(String scriptDDL) {
         InputStream in = DataSource.class.getResourceAsStream(scriptDDL);
 
@@ -80,16 +54,12 @@ final class DataSource {
     }
 
     public static void createHsqlDBTable(InputStream scriptDDL) {
-        try {
-            if (HSQL_SERVER != null) {
-                try (Connection c = DataSource.openConnection();
-                     Statement query = c.createStatement();
-                     BufferedReader ddl = new BufferedReader(new InputStreamReader(scriptDDL))) {
-        
-                    while (ddl.ready()) {
-                        query.execute(ddl.readLine());
-                    }
-                }
+        try (Connection c = DataSource.openConnection();
+             Statement query = c.createStatement();
+             BufferedReader ddl = new BufferedReader(new InputStreamReader(scriptDDL))) {
+
+            while (ddl.ready()) {
+                query.execute(ddl.readLine());
             }
         } catch (Exception cause) {
             cause.printStackTrace();
@@ -114,16 +84,5 @@ final class DataSource {
         } catch (SQLException cause) {
             throw new DatabaseException("PROBLEMAS AO FECHAR CONEXÃO COM BANCO DE DADOS!", cause);
         }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        if (HSQL_SERVER != null) {
-            HSQL_SERVER.stop();
-            HSQL_SERVER.shutdown();
-            HSQL_SERVER = null;
-        }
-
-        super.finalize();
     }
 }
