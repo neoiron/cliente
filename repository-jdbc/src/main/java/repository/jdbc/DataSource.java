@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ import repository.exception.DatabaseException;
 final class DataSource {
 
     interface Jdbc {
-        String FILE_NAME = "conf/jdbc.properties";
+        Path FILE_NAME = Paths.get("conf/jdbc.properties");
         String DATABASE = "jdbc.database";
         String DRIVER = "jdbc.driver";
         String URL = "jdbc.url";
@@ -29,9 +31,9 @@ final class DataSource {
         super();
     }
 
-    public static Connection openConnection() throws DatabaseException {
+    public static ConnectioAjusten openConnection() throws DatabaseException {
         Properties p = new Properties();
-        try (Reader r = new FileReader(Jdbc.FILE_NAME)) {
+        try (Reader r = new FileReader(Jdbc.FILE_NAME.toFile())) {
             p.load(r);
 
             Class.forName(p.getProperty(Jdbc.DRIVER));
