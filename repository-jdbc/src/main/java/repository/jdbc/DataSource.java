@@ -19,7 +19,7 @@ import repository.exception.DatabaseException;
 final class DataSource {
 
     interface Jdbc {
-        Path FILE_NAME = Paths.get("conf/jdbc.properties");
+        Path FILE_NAME = Paths.get("conf/jdbc.properties").toAbsolutePath();
         String DATABASE = "jdbc.database";
         String DRIVER = "jdbc.driver";
         String URL = "jdbc.url";
