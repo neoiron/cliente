@@ -31,7 +31,7 @@ final class DataSource {
         super();
     }
 
-    public static ConnectioAjusten openConnection() throws DatabaseException {
+    public static Connection openConnection() throws DatabaseException {
         Properties p = new Properties();
         try (Reader r = new FileReader(Jdbc.FILE_NAME.toFile())) {
             p.load(r);
