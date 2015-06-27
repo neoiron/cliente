@@ -12,7 +12,7 @@ public final class HsqlDBHelper {
 
     private static Server HSQL_SERVER = new Server();
 
-    private static Path FILE_PROPERTIES = Paths.get("conf/jdbc.properties");
+    private static Path FILE_PROPERTIES = Paths.get("./conf/jdbc.properties").toAbsolutePath();
     private static String KEY_DATABASE = "jdbc.database";
 
     private HsqlDBHelper() {
