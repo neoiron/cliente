@@ -2,6 +2,8 @@ package repository.jdbc.hsqldb;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import org.hsqldb.Server;
@@ -10,7 +12,7 @@ public final class HsqlDBHelper {
 
     private static Server HSQL_SERVER = new Server();
 
-    private static String FILE_PROPERTIES = "conf/jdbc.properties";
+    private static Path FILE_PROPERTIES = Paths.get("conf/jdbc.properties");
     private static String KEY_DATABASE = "jdbc.database";
 
     private HsqlDBHelper() {
@@ -32,7 +34,7 @@ public final class HsqlDBHelper {
         Properties p = new Properties();
         String database = null;
 
-        try (Reader r = new FileReader(FILE_PROPERTIES)) {
+        try (Reader r = new FileReader(FILE_PROPERTIES.toFile())) {
             p.load(r);
 
             database = p.getProperty(KEY_DATABASE);
