@@ -117,6 +117,7 @@
   <module>core</module>
   <module>repository-api</module>
   <module>repository-filesystem</module>
+  <module>repository-jdbc</module>
   <module>service-api</module>
  </modules>
 
