@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.fx.controller.MunicipioController">
+    <top>
+        <AnchorPane prefHeight="74.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+           <children>
+               <Label layoutX="14.0" layoutY="14.0" prefHeight="14.0" prefWidth="21.0" text="UF" />
+               <ComboBox fx:id="cbUF" layoutX="35.0" layoutY="10.0" onAction="#onChangeUFAction" prefWidth="150.0" />
+               <Label layoutX="193.0" layoutY="14.0" prefHeight="16.0" prefWidth="63.0" text="Município" />
+               <TextField fx:id="tfNOME" layoutX="257.0" layoutY="10.0" prefHeight="26.0" prefWidth="328.0" />
+               <Button layoutX="505.0" layoutY="41.0" mnemonicParsing="false" onAction="#onCancelAction" text="Cancelar" />
+               <Button layoutX="461.0" layoutY="41.0" mnemonicParsing="false" onAction="#onSaveAction" text="OK" />
+           </children>
+        </AnchorPane>
+    </top>
+    <center>
+        <TableView fx:id="tvMUNICIPIOS" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="tcNOME" editable="false" prefWidth="516.0" resizable="false" sortable="false" text="Município" />
+                <TableColumn fx:id="tcUF" editable="false" maxWidth="300.0" prefWidth="73.0" resizable="false" sortable="false" text="UF" />
+            </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+        </TableView>
+    </center>
+</BorderPane>

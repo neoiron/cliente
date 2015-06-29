@@ -121,6 +121,7 @@
   <module>repository-jdbc-hsqldb</module>
   <module>service-api</module>
   <module>service-impl</module>
+  <module>app-fx</module>
  </modules>
 
  <dependencies>
