@@ -1,5 +1,5 @@
 package repository.jdbc.hsqldb;
 
-public class StartServer {
+public class HsqlDBServer {
 
 }
