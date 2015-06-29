@@ -118,6 +118,7 @@
   <module>repository-api</module>
   <module>repository-filesystem</module>
   <module>repository-jdbc</module>
+  <module>repository-jdbc-hsqldb</module>
   <module>service-api</module>
  </modules>
 
