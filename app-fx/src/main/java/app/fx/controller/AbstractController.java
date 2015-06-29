@@ -12,7 +12,6 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
-import repository.jdbc.hsqldb.HsqlDBHelper;
 import app.fx.api.Controller;
 import app.fx.util.FXMLHelper;
 
@@ -84,7 +83,6 @@ abstract class AbstractController implements Controller {
                 .showConfirm();
 
         if (Dialog.ACTION_YES.equals(a)) {
-            HsqlDBHelper.stopServer();
             close();
         } else {
             event.consume();
