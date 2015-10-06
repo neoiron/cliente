@@ -1,8 +1,11 @@
 package facade.impl;
 
 import domain.model.Municipio;
+import domain.model.UFVO;
 import service.MunicipioService;
 import service.impl.DefaultMunicipioService;
+
+import java.util.Collection;
 
 public class MunicipioFacade {
 
@@ -54,5 +57,10 @@ public class MunicipioFacade {
 
     public void apagar(Object municipio) throws Exception {
         service.apagar((Municipio) municipio);
+    }
+
+    public Collection<?> listar(CharSequence uf) throws Exception {
+        // TODO Criar serviço para listar todos os municípios.
+        return service.listar(UFVO.valueOf(uf));
     }
 }
