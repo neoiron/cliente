@@ -23,4 +23,8 @@ public class MunicipioFacade {
     public void validar(Object municipio) throws Exception {
         service.validar((Municipio) municipio);
     }
+
+    public void salvar(Object municipio) throws Exception {
+        service.salvar((Municipio) municipio);
+    }
 }
