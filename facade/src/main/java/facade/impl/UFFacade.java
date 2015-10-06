@@ -10,4 +10,8 @@ public class UFFacade {
     public Collection<UFVO> listarUFs() {
         return Arrays.asList(UFVO.values());
     }
+
+    public static UFVO valueOf(CharSequence uf) {
+        return UFVO.valueOf(uf);
+    }
 }
