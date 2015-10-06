@@ -12,4 +12,29 @@
     <artifactId>cliente-facade</artifactId>
     <packaging>jar</packaging>
     <name>[JAR][CLIENTE] Módulo facade</name>
+
+    <dependencies>
+        <!-- CORE -->
+        <dependency>
+            <groupId>br.cliente</groupId>
+            <artifactId>cliente-core</artifactId>
+            <version>${version.cliente}</version>
+        </dependency>
+
+        <!-- SERVICE -->
+        <dependency>
+            <groupId>br.cliente</groupId>
+            <artifactId>cliente-service-api</artifactId>
+            <version>${version.cliente}</version>
+        </dependency>
+        <dependency>
+            <groupId>br.cliente</groupId>
+            <artifactId>cliente-service-impl</artifactId>
+            <version>${version.cliente}</version>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <version.cliente>1.0.0.RELEASE</version.cliente>
+    </properties>
 </project>
