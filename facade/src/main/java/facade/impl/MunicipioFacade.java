@@ -39,4 +39,8 @@ public class MunicipioFacade {
     public void salvar(Object municipio) throws Exception {
         service.salvar((Municipio) municipio);
     }
+
+    public void apagar(Object municipio) throws Exception {
+        service.apagar((Municipio) municipio);
+    }
 }
