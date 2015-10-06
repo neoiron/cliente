@@ -7,6 +7,11 @@ import java.util.Collection;
 
 public class UFFacade {
 
+    public interface Fields {
+        String UF = "uf";
+        String UFS = "ufs";
+    }
+
     public Collection<UFVO> listarUFs() {
         return Arrays.asList(UFVO.values());
     }
