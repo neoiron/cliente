@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>cliente</artifactId>
@@ -18,23 +18,19 @@
         <dependency>
             <groupId>br.cliente</groupId>
             <artifactId>cliente-core</artifactId>
-            <version>${version.cliente}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- SERVICE -->
         <dependency>
             <groupId>br.cliente</groupId>
             <artifactId>cliente-service-api</artifactId>
-            <version>${version.cliente}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>br.cliente</groupId>
             <artifactId>cliente-service-impl</artifactId>
-            <version>${version.cliente}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
-
-    <properties>
-        <version.cliente>1.0.0.RELEASE</version.cliente>
-    </properties>
 </project>
