@@ -40,6 +40,18 @@ public class MunicipioFacade {
         service.salvar((Municipio) municipio);
     }
 
+    public void apagar(CharSequence id) throws Exception {
+        apagar(Integer.valueOf(id.toString()));
+    }
+
+    public void apagar(Integer id) throws Exception {
+        Municipio domain = new Municipio();
+
+        domain.setId(id);
+
+        apagar(domain);
+    }
+
     public void apagar(Object municipio) throws Exception {
         service.apagar((Municipio) municipio);
     }
