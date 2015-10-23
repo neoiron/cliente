@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
  <parent>
   <artifactId>cliente</artifactId>
@@ -20,6 +20,15 @@
     <configuration>
      <mainClass>app.fx.Main</mainClass>
     </configuration>
+    <dependencies>
+     <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>javafx</artifactId>
+      <version>2.2</version>
+      <systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
+      <scope>system</scope>
+     </dependency>
+    </dependencies>
    </plugin>
   </plugins>
  </build>
@@ -39,11 +48,6 @@
    <groupId>br.cliente</groupId>
    <artifactId>cliente-service-impl</artifactId>
    <version>${project.version}</version>
-  </dependency>
-  <dependency>
-   <groupId>org.controlsfx</groupId>
-   <artifactId>controlsfx</artifactId>
-   <version>8.40.9</version>
   </dependency>
   <dependency>
    <groupId>org.hsqldb</groupId>
