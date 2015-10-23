@@ -1,29 +1,18 @@
 package app.fx.controller;
 
-import java.util.Collection;
-
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
-import javafx.scene.control.TextField;
-
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
-
-import service.MunicipioService;
-import service.factory.FactoryService;
+import app.fx.util.AlertHelper;
 import domain.exception.MunicipioInvalidoException;
 import domain.model.Municipio;
 import domain.model.UFVO;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.TableView.TableViewSelectionModel;
+import service.MunicipioService;
+import service.factory.FactoryService;
+
+import java.util.Collection;
 
 @SuppressWarnings("deprecation")
 public class MunicipioController extends AbstractController {
@@ -74,7 +63,7 @@ public class MunicipioController extends AbstractController {
         mi = cm.getItems().get(1);
         mi.setOnAction(this::onDeleteAction);
 
-        mi = cm.getItems().get(3);  
+        mi = cm.getItems().get(3);
         mi.setOnAction(e -> {
             TableViewSelectionModel<app.fx.model.Municipio> model;
             int size, sizeSelected;
@@ -121,12 +110,8 @@ public class MunicipioController extends AbstractController {
             loadTable();
             clearForm();
         } catch (Exception cause) {
-            Dialogs
-                .create()
-                .title(getStage().getTitle())
-                .masthead(cause.getMessage())
-                .message("OPS...")
-                .showException(cause);
+            AlertHelper.createError(getStage(), cause)
+                    .showAndWait();
         }
     }
 
@@ -151,19 +136,11 @@ public class MunicipioController extends AbstractController {
         } catch (MunicipioInvalidoException cause) {
             tfNOME.requestFocus();
             tfNOME.selectAll();
-            Dialogs
-                .create()
-                .title(getStage().getTitle())
-                .masthead("Falha na validação...")
-                .message(cause.getMessage())
-                .showWarning();
+            AlertHelper.createWarning(getStage(), cause, "Falha na Validação!")
+                    .showAndWait();
         } catch (Exception cause) {
-            Dialogs
-                .create()
-                .title(getStage().getTitle())
-                .masthead(cause.getMessage())
-                .message("OPS...")
-                .showException(cause);
+            AlertHelper.createError(getStage(), cause)
+                    .showAndWait();
         }
     }
 
@@ -179,13 +156,12 @@ public class MunicipioController extends AbstractController {
             size = indices.size();
 
             switch (size) {
+                default:
             case 0:
-                Dialogs
-                    .create()
-                    .title(getStage().getTitle())
-                    .masthead("Alterando...")
-                    .message("Favor, selecione pelo menos 1 município para alterar!")
-                    .showWarning();
+                AlertHelper.createWarning(getStage())
+                        .setHeaderText("Alterando...")
+                        .setContentText("Favor, selecione pelo menos 1 município para alterar!")
+                        .showAndWait();
                 break;
             case 1:
                 app.fx.model.Municipio m = model.getSelectedItem();
@@ -195,22 +171,10 @@ public class MunicipioController extends AbstractController {
                 tfNOME.requestFocus();
                 tfNOME.selectAll();
                 break;
-            default:
-                Dialogs
-                .create()
-                .title(getStage().getTitle())
-                .masthead("Alterando...")
-                .message("Favor, selecione apenas 1 município para alterar!")
-                .showWarning();
-                break;
             }
         } catch (Exception cause) {
-            Dialogs
-                .create()
-                .title(getStage().getTitle())
-                .masthead(cause.getMessage())
-                .message("OPS...")
-                .showException(cause);
+            AlertHelper.createError(getStage(), cause)
+                    .showAndWait();
         }
     }
 
@@ -227,12 +191,10 @@ public class MunicipioController extends AbstractController {
 
             switch (size) {
             case 0:
-                Dialogs
-                    .create()
-                    .title(getStage().getTitle())
-                    .masthead("Apagando...")
-                    .message("Favor, selecione pelo menos 1 município para apagar!")
-                    .showWarning();
+                AlertHelper.createWarning(getStage())
+                        .setHeaderText("Apagando...")
+                        .setContentText("Favor, selecione pelo menos 1 município para apagar!")
+                        .showAndWait();
                 break;
             default:
                 String message;
@@ -245,14 +207,8 @@ public class MunicipioController extends AbstractController {
                     message = String.format("%s municípios", size);
                 }
 
-                Action a = Dialogs
-                                .create()
-                                .title(getStage().getTitle())
-                                .masthead(message)
-                                .message("Confirma apagar?")
-                                .showConfirm();
-
-                if (Dialog.ACTION_YES.equals(a)) {
+                if (AlertHelper.createConfirmation(getStage(), "Confirma apagar?")
+                        .showAndWait(message)) {
                     for (app.fx.model.Municipio i : model.getSelectedItems()) {
                         service.apagar(i.getDomain().get());
                     }
@@ -264,12 +220,8 @@ public class MunicipioController extends AbstractController {
                 break;
             }
         } catch (Exception cause) {
-            Dialogs
-                .create()
-                .title(getStage().getTitle())
-                .masthead(cause.getMessage())
-                .message("OPS...")
-                .showException(cause);
+            AlertHelper.createError(getStage(), cause)
+                    .showAndWait();
         }
     }
 

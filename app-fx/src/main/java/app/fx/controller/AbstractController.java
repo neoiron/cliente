@@ -1,5 +1,8 @@
 package app.fx.controller;
 
+import app.fx.api.Controller;
+import app.fx.util.AlertHelper;
+import app.fx.util.FXMLHelper;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -7,13 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
-
-import app.fx.api.Controller;
-import app.fx.util.FXMLHelper;
 
 @SuppressWarnings("deprecation")
 abstract class AbstractController implements Controller {
@@ -75,14 +71,8 @@ abstract class AbstractController implements Controller {
     }
 
     protected void confirmAndClose(Event event) {
-        Action a = Dialogs
-                .create()
-                .title(stage.getTitle())
-                .masthead("Deseja sair?")
-                .message("Caso sim, bye bye!")
-                .showConfirm();
-
-        if (Dialog.ACTION_YES.equals(a)) {
+        if (AlertHelper.createConfirmation(getStage(), "Confirma apagar?")
+                .showAndWait("Caso sim, bye bye!")) {
             close();
         } else {
             event.consume();
