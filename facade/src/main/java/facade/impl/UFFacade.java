@@ -7,16 +7,20 @@ import java.util.Collection;
 
 public class UFFacade {
 
-    public interface Fields {
-        String UF = "uf";
-        String UFS = "ufs";
+    public static Object valueOf(CharSequence uf) {
+        return UFVO.valueOf(uf);
     }
 
-    public Collection<UFVO> listarUFs() {
+    public Collection<Object> listarUFs() {
         return Arrays.asList(UFVO.values());
     }
 
-    public static UFVO valueOf(CharSequence uf) {
-        return UFVO.valueOf(uf);
+    public Object getSelecione() {
+        return UFVO.SELECIONE;
+    }
+
+    public interface Fields {
+        String UF = "uf";
+        String UFS = "ufs";
     }
 }
