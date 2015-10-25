@@ -15,71 +15,53 @@ public class MunicipioFacade {
 
     private MunicipioService service = new DefaultMunicipioService();
 
-    public static Map<String, Object> toMap(Domain model) throws Exception {
-        Map<String, Object> map = new LinkedHashMap<>();
+    public static Map<CharSequence, Object> toMap(Domain model) throws Exception {
+        Map<CharSequence, Object> map = new LinkedHashMap<>();
         Municipio m = (Municipio) model;
 
-        map.put(Facade.Municipio.KEY_ID, m.getId());
+        map.put(Facade.Municipio.KEY_ID, model);
         map.put(Facade.Municipio.KEY_NOME, m.getNome());
         map.put(Facade.Municipio.KEY_UF, m.getUf());
 
         return map;
     }
 
-    public void validar(CharSequence municipio, CharSequence uf) throws Exception {
-        validar(null, municipio, uf);
+    public void validar(Map<CharSequence, Object> map) throws Exception {
+        final Municipio model = converter(map);
+
+        service.validar(model);
     }
 
-    public void validar(CharSequence id, CharSequence municipio, CharSequence uf) throws Exception {
-        Municipio domain = new Municipio(municipio, uf);
+    public void salvar(Map<CharSequence, Object> map) throws Exception {
+        final Municipio model = converter(map);
 
-        domain.setId(id == null || "".equals(id) ? null : Integer.valueOf(id.toString()));
-
-        validar(domain);
+        service.salvar(model);
     }
 
-    public void validar(Domain municipio) throws Exception {
-        service.validar((Municipio) municipio);
-    }
+    public void apagar(Map<CharSequence, Object> map) throws Exception {
+        final Municipio model = converter(map);
 
-    public void salvar(CharSequence municipio, CharSequence uf) throws Exception {
-        salvar(null, municipio, uf);
-    }
-
-    public void salvar(CharSequence id, CharSequence municipio, CharSequence uf) throws Exception {
-        Municipio domain = new Municipio(municipio, uf);
-
-        domain.setId(id == null || "".equals(id) ? null : Integer.valueOf(id.toString()));
-
-        salvar(domain);
-    }
-
-    public void salvar(Domain municipio) throws Exception {
-        service.salvar((Municipio) municipio);
-    }
-
-    public void apagar(CharSequence id) throws Exception {
-        apagar(Integer.valueOf(id.toString()));
-    }
-
-    public void apagar(Integer id) throws Exception {
-        Municipio domain = new Municipio();
-
-        domain.setId(id);
-
-        apagar(domain);
-    }
-
-    public void apagar(Domain municipio) throws Exception {
-        service.apagar((Municipio) municipio);
-    }
-
-    public Collection<? extends Domain> listar(Domain uf) throws Exception {
-        return listar(uf.toString());
+        service.apagar(model);
     }
 
     public Collection<? extends Domain> listar(CharSequence uf) throws Exception {
         // TODO Criar serviço para listar todos os municípios.
         return service.listar(UFVO.valueOf(uf));
+    }
+
+    private Municipio converter(Map<CharSequence, Object> map) throws Exception {
+        Object id = map.get(Facade.Municipio.KEY_ID);
+        Municipio model;
+
+        if (id == null) {
+            model = new Municipio();
+        } else {
+            model = (Municipio) id;
+        }
+
+        model.setNome((CharSequence) map.get(Facade.Municipio.KEY_NOME));
+        model.setUf((UFVO) map.get(Facade.Municipio.KEY_UF));
+
+        return model;
     }
 }
