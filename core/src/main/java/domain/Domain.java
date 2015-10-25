@@ -13,4 +13,6 @@ public interface Domain<PK, E extends Throwable> {
     void validar() throws E;
 
     String toCSV(char separator);
+
+    Object[] toArray();
 }

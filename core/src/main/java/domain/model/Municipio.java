@@ -3,7 +3,7 @@ package domain.model;
 import domain.exception.MunicipioException;
 import domain.exception.MunicipioInvalidoException;
 
-public class Municipio extends Entidade<Integer, MunicipioException> implements Comparable<Municipio> {
+public class Municipio extends Entidade<Integer, MunicipioException> implements Comparable<Municipio>, Cloneable {
 
     private CharSequence nome;
     private UFVO uf;
@@ -39,12 +39,12 @@ public class Municipio extends Entidade<Integer, MunicipioException> implements 
         return uf;
     }
 
-    public void setUf(CharSequence uf) {
-        setUf(UFVO.valueOf(uf));
-    }
-
     public void setUf(UFVO uf) {
         this.uf = uf;
+    }
+
+    public void setUf(CharSequence uf) {
+        setUf(UFVO.valueOf(uf));
     }
 
     public void validarNome() throws MunicipioInvalidoException {
@@ -116,15 +116,12 @@ public class Municipio extends Entidade<Integer, MunicipioException> implements 
         } else if (!nome.equals(other.nome)) {
             return false;
         }
-        if (uf != other.uf) {
-            return false;
-        }
-        return true;
+        return uf == other.uf;
     }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-        Municipio m = new Municipio();
+        Municipio m = (Municipio) super.clone();
 
         m.setNome(nome);
         m.setUf(uf);
@@ -138,6 +135,11 @@ public class Municipio extends Entidade<Integer, MunicipioException> implements 
         uf = null;
 
         super.finalize();
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[]{this, nome, uf};
     }
 
     @Override
