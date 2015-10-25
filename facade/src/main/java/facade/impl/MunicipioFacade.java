@@ -44,6 +44,10 @@ public class MunicipioFacade {
         service.apagar(model);
     }
 
+    public void apagar(Domain model) throws Exception {
+        service.apagar((Municipio) model);
+    }
+
     public Collection<? extends Domain> listar(CharSequence uf) throws Exception {
         // TODO Criar serviço para listar todos os municípios.
         return service.listar(UFVO.valueOf(uf));
