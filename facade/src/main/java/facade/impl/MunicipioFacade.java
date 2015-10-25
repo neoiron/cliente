@@ -3,14 +3,28 @@ package facade.impl;
 import domain.Domain;
 import domain.model.Municipio;
 import domain.model.UFVO;
+import facade.api.Facade;
 import service.MunicipioService;
 import service.impl.DefaultMunicipioService;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MunicipioFacade {
 
     private MunicipioService service = new DefaultMunicipioService();
+
+    public static Map<String, Object> toMap(Domain model) throws Exception {
+        Map<String, Object> map = new LinkedHashMap<>();
+        Municipio m = (Municipio) model;
+
+        map.put(Facade.Municipio.KEY_ID, m.getId());
+        map.put(Facade.Municipio.KEY_NOME, m.getNome());
+        map.put(Facade.Municipio.KEY_UF, m.getUf());
+
+        return map;
+    }
 
     public void validar(CharSequence municipio, CharSequence uf) throws Exception {
         validar(null, municipio, uf);
