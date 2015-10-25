@@ -1,26 +1,27 @@
 package app.fx.model;
 
+import domain.Domain;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableStringValue;
-import domain.model.UFVO;
 
 public class Municipio {
 
-    private ObservableObjectValue<domain.model.Municipio> domain;
+    private ObservableObjectValue<Domain> domain;
     private ObservableStringValue nome;
-    private ObservableObjectValue<UFVO> uf;
+    private ObservableObjectValue<Object> uf;
 
-    public Municipio(domain.model.Municipio domain) {
+    public Municipio(Domain domain) {
         super();
 
-        this.domain = new SimpleObjectProperty<>(domain);
-        this.nome = new SimpleStringProperty(String.valueOf(domain.getNome()));
-        this.uf = new SimpleObjectProperty<>(domain.getUf());
+        Object[] v = domain.toArray();
+        this.domain = new SimpleObjectProperty<>((Domain) v[0]);
+        this.nome = new SimpleStringProperty(v[1].toString());
+        this.uf = new SimpleObjectProperty<>(v[2]);
     }
 
-    public ObservableObjectValue<domain.model.Municipio> getDomain() {
+    public ObservableObjectValue<Domain> getDomain() {
         return domain;
     }
 
@@ -28,7 +29,7 @@ public class Municipio {
         return nome;
     }
 
-    public ObservableObjectValue<UFVO> getUf() {
+    public ObservableObjectValue<Object> getUf() {
         return uf;
     }
 }

@@ -41,19 +41,8 @@
   </dependency>
   <dependency>
    <groupId>br.cliente</groupId>
-   <artifactId>cliente-repository-filesystem</artifactId>
+   <artifactId>cliente-facade</artifactId>
    <version>${project.version}</version>
-  </dependency>
-  <dependency>
-   <groupId>br.cliente</groupId>
-   <artifactId>cliente-service-impl</artifactId>
-   <version>${project.version}</version>
-  </dependency>
-  <dependency>
-   <groupId>org.hsqldb</groupId>
-   <artifactId>hsqldb</artifactId>
-   <version>2.3.2</version>
-   <scope>provided</scope>
   </dependency>
  </dependencies>
 </project>

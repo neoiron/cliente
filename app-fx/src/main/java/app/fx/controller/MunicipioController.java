@@ -1,20 +1,21 @@
 package app.fx.controller;
 
 import app.fx.util.AlertHelper;
+import domain.Domain;
 import domain.exception.MunicipioInvalidoException;
 import domain.model.Municipio;
-import domain.model.UFVO;
+import facade.api.Facade;
+import facade.impl.MunicipioFacade;
+import facade.impl.UFFacade;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.TableView.TableViewSelectionModel;
-import service.MunicipioService;
-import service.factory.FactoryService;
 
 import java.util.Collection;
+import java.util.Map;
 
-@SuppressWarnings("deprecation")
 public class MunicipioController extends AbstractController {
 
     public static final String STYLE_URL = "/app/fx/view/municipio.css";
@@ -22,12 +23,13 @@ public class MunicipioController extends AbstractController {
     public static final String VIEW_URL = "/app/fx/view/municipio.fxml";
     public static final String VIEW_TITLE = "Cadastro de Municípios";
 
-    private MunicipioService service;
+    private MunicipioFacade facade;
+    private UFFacade ufFacade;
 
-    private Municipio aalterar = null;
+    private Domain aalterar = null;
 
     @FXML
-    private ComboBox<UFVO> cbUF;
+    private ComboBox<Object> cbUF;
 
     @FXML
     private TextField tfNOME;
@@ -41,7 +43,7 @@ public class MunicipioController extends AbstractController {
     private TableColumn<app.fx.model.Municipio, String> tcNOME;
 
     @FXML
-    private TableColumn<app.fx.model.Municipio, UFVO> tcUF;
+    private TableColumn<app.fx.model.Municipio, Object> tcUF;
 
     @FXML
     public void initialize() {
@@ -51,7 +53,8 @@ public class MunicipioController extends AbstractController {
     }
 
     private void initServices() {
-        service = FactoryService.createMunicipioService();
+        facade = new MunicipioFacade();
+        ufFacade = new UFFacade();
     }
 
     private void initActions() {
@@ -97,8 +100,8 @@ public class MunicipioController extends AbstractController {
         tvMUNICIPIOS.setContextMenu(cm);
         tvMUNICIPIOS.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        cbUF.getItems().addAll(UFVO.values());
-        cbUF.setValue(UFVO.SELECIONE);
+        cbUF.getItems().addAll(ufFacade.listarUFs());
+        cbUF.setValue(ufFacade.getSelecione());
 
         tcNOME.setCellValueFactory(data -> data.getValue().getNome());
         tcUF.setCellValueFactory(data -> data.getValue().getUf());
@@ -117,7 +120,8 @@ public class MunicipioController extends AbstractController {
 
     @FXML
     private void onSaveAction(ActionEvent e) {
-        Municipio domain;
+        Map<CharSequence, Object> map;
+        Domain domain;
         try {
             if (aalterar == null) {
                 domain = new Municipio();
@@ -126,11 +130,12 @@ public class MunicipioController extends AbstractController {
                 aalterar = null;
             }
 
-            domain.setNome(tfNOME.getText());
-            domain.setUf(cbUF.getValue());
+            map = MunicipioFacade.toMap(domain);
+            map.put(Facade.Municipio.KEY_NOME, tfNOME.getText());
+            map.put(Facade.Municipio.KEY_UF, cbUF.getValue());
 
-            service.validar(domain);
-            service.salvar(domain);
+            facade.validar(map);
+            facade.salvar(map);
             clearForm();
             loadTable();
         } catch (MunicipioInvalidoException cause) {
@@ -210,7 +215,7 @@ public class MunicipioController extends AbstractController {
                 if (AlertHelper.createConfirmation(getStage(), "Confirma apagar?")
                         .showAndWait(message)) {
                     for (app.fx.model.Municipio i : model.getSelectedItems()) {
-                        service.apagar(i.getDomain().get());
+                        facade.apagar(i.getDomain().get());
                     }
 
                     loadTable();
@@ -232,12 +237,12 @@ public class MunicipioController extends AbstractController {
 
     private void loadTable() throws Exception {
         ObservableList<app.fx.model.Municipio> items;
-        Collection<Municipio> municipios;
-        UFVO uf;
+        Collection<? extends Domain> municipios;
+        Object uf;
 
         items = tvMUNICIPIOS.getItems();
         uf = cbUF.getValue();
-        municipios = service.listar(uf);
+        municipios = facade.listar(uf.toString());
 
         items.clear();
         municipios.forEach(m -> items.add(new app.fx.model.Municipio(m)));
