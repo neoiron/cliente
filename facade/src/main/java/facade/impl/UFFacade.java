@@ -19,8 +19,4 @@ public class UFFacade {
         return UFVO.SELECIONE;
     }
 
-    public interface Fields {
-        String UF = "uf";
-        String UFS = "ufs";
-    }
 }

@@ -2,7 +2,11 @@ package facade.api;
 
 public interface Facade {
 
-    String UF = "uf_facade";
+    interface UF {
+        String KEY_FACADE = "uf_facade";
+        String KEY_ID = "uf_id";
+        String KEY_IDS = "uf_ids";
+    }
 
     interface Municipio {
         String KEY_FACADE = "municipio_facade";
